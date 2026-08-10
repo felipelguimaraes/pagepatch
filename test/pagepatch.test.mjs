@@ -152,6 +152,9 @@ describe("homepage copy", () => {
     assert.match(document.querySelector(".lead").textContent, /write the request right there/i);
     assert.equal(document.querySelector("#bookmarklet strong").textContent, "PagePatch by Evoltex");
     assert.match(document.querySelector("footer").textContent, /does not change the real site/i);
+    assert.equal(document.querySelector(".github-link").href, "https://github.com/felipelguimaraes/pagepatch");
+    assert.equal(document.querySelector(".kofi-link").href, "https://ko-fi.com/felipelg");
+    assert.match(document.querySelector(".kofi-link img").src, /^https:\/\/storage\.ko-fi\.com\/cdn\/kofi3\.png/);
     assert.equal(document.title, "PagePatch: mark changes on any webpage");
     dom.window.close();
   });
@@ -164,6 +167,8 @@ describe("homepage copy", () => {
     assert.match(document.querySelector(".lead").textContent, /escreva o pedido ali mesmo/i);
     assert.equal(document.querySelector("#bookmarklet strong").textContent, "PagePatch by Evoltex");
     assert.match(document.querySelector("footer").textContent, /não altera o site de verdade/i);
+    assert.equal(document.querySelector(".github-link").textContent, "Repositório no GitHub");
+    assert.equal(document.querySelector(".kofi-link").href, "https://ko-fi.com/felipelg");
     assert.equal(document.title, "PagePatch: marque alterações em qualquer página");
     dom.window.close();
   });
