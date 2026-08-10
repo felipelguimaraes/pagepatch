@@ -45,7 +45,9 @@ Requests are stored in `localStorage` under `pagepatch:v1`. Storage is specific 
 - Enabled requests automatically reapply after reloads and client-framework DOM rerenders.
 - Text and alt-text edits preview live while typing; closing the editor restores an unsaved draft.
 - Turning preview off restores the page without deleting requests.
-- SEO mode includes technical metadata, heading hierarchy, social-card previews, image auditing, and JSON-LD editing.
+- SEO mode includes technical metadata, heading hierarchy, anchor/link auditing, list structure, social-card previews, image auditing, and JSON-LD editing.
+- Link requests can change both the visible anchor text and its destination URL.
+- Exported technical details include a complete `body > ... > element` DOM path plus the shorter stable selector when available.
 - Clicking a request card scrolls to and flashes its visible page target.
 - Export includes active requests only and produces a human-readable Markdown handoff with page-area context, current/requested values, and secondary technical details.
 - The structured JSON is kept as PagePatch import data rather than presented as an implementation prompt.

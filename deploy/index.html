@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="PagePatch turns visual webpage edits into one organized implementation request.">
+    <meta name="description" content="Mark changes directly on any webpage and export them as one clear implementation request.">
     <link rel="icon" type="image/png" href="/pagepatch-icon.png">
     <link rel="apple-touch-icon" href="/pagepatch-icon.png">
-    <title>PagePatch — Edit the page, export the request</title>
+    <title>PagePatch: mark changes on any webpage</title>
     <style>
       * { box-sizing: border-box; }
       :root { color: #172033; background: #f4f6fb; font: 16px/1.6 Inter, ui-sans-serif, system-ui, sans-serif; }
@@ -24,8 +24,8 @@
       .bookmark:hover { background: #d9570f; }
       .bookmark span { display: grid; text-align: left; }
       .bookmark small { color: #fff1e8; font-size: 11px; font-weight: 600; }
-      .bookmark small::before { content: "Drag to bookmarks bar"; }
-      html[lang="pt-BR"] .bookmark small::before { content: "Arraste para a barra de favoritos"; }
+      .bookmark small::before { content: "Drag to your bookmarks"; }
+      html[lang="pt-BR"] .bookmark small::before { content: "Arraste para os favoritos"; }
       .copy-button { min-height: 58px; padding: 0 18px; border: 1px solid #cfd6e5; border-radius: 12px; background: #f5f7fb; color: #34415b; font-weight: 800; cursor: pointer; }
       .copy-button:hover { background: #e9edf5; }
       .hint { margin-top: 14px !important; font-size: 13px; }
@@ -61,56 +61,56 @@
   <body>
     <main>
       <div class="eyebrow"><img src="/pagepatch-icon.png" alt="">PagePatch</div>
-      <h1>Edit the page. Export one clear request.</h1>
-      <p class="lead">Select text, SEO structure, containers, and computed CSS directly on a webpage. Preview the result and export every requested change together.</p>
+      <h1>Point at the page. Say what should change.</h1>
+      <p class="lead">Open any webpage, click the text, image, link, list, or layout you want changed, and write the request right there. PagePatch keeps everything together in one file for the person who will build it.</p>
 
       <section class="install">
-        <h2>Add PagePatch to your favorites</h2>
-        <p>The easiest option is to drag the orange button directly into your bookmarks bar.</p>
+        <h2>Put PagePatch in your bookmarks</h2>
+        <p>Drag this button to your bookmarks bar. Once it is there, click it to open PagePatch on any site.</p>
         <div class="install-actions">
-          <a class="bookmark" id="bookmarklet" href="javascript:(()=>{if(window.PagePatch){window.PagePatch.start();return}const s=document.createElement('script');s.src='https://pagepatch.evoltex.com.br/pagepatch.js?v='+Date.now();s.onload=()=>window.PagePatch.start();document.head.appendChild(s)})()">✎ <span><strong>PagePatch — Evoltex</strong><small aria-hidden="true"></small></span></a>
-          <button class="copy-button" id="copy-bookmarklet" type="button">Copy bookmark code</button>
+          <a class="bookmark" id="bookmarklet" href="javascript:(()=>{if(window.PagePatch){window.PagePatch.start();return}const s=document.createElement('script');s.src='https://pagepatch.evoltex.com.br/pagepatch.js?v='+Date.now();s.onload=()=>window.PagePatch.start();document.head.appendChild(s)})()">✎ <span><strong>PagePatch by Evoltex</strong><small aria-hidden="true"></small></span></a>
+          <button class="copy-button" id="copy-bookmarklet" type="button">Copy the code</button>
         </div>
-        <p class="hint">If the bookmarks bar is hidden, show it with <code>Ctrl+Shift+B</code>. Browsers do not permit silent one-click bookmark installation.</p>
+        <p class="hint">Cannot see the bookmarks bar? Press <code>Ctrl+Shift+B</code>. Your browser will not let a site create a bookmark for you, so this step has to be manual.</p>
       </section>
 
       <section class="importer">
-        <h2>Open an exported page request</h2>
-        <p>Drop a PagePatch Markdown or JSON export here. You can review its destination before opening the original page.</p>
+        <h2>Open a request someone sent you</h2>
+        <p>Drop an exported PagePatch Markdown or JSON file here. You will see which page it belongs to before opening it.</p>
         <div class="drop-zone" id="drop-zone" role="button" tabindex="0">
-          <div><strong>Drop the request file here</strong><span>or click to choose a .md or .json file</span></div>
+          <div><strong>Drop the file here</strong><span>or click to choose a .md or .json file</span></div>
         </div>
         <input id="import-file" type="file" accept=".md,.markdown,.json,application/json,text/markdown" hidden>
         <div class="import-result" id="import-result" hidden>
           <strong id="import-title"></strong>
           <p id="import-target"></p>
-          <p id="import-help">Open the page, then click your <strong>Edit this page</strong> favorite to import and preview the requests.</p>
-          <a class="open-import" id="open-import" target="_blank" rel="noopener">Open page and import</a>
+          <p id="import-help">Open the page, then click your <strong>PagePatch by Evoltex</strong> bookmark to load and preview the requests.</p>
+          <a class="open-import" id="open-import" target="_blank" rel="noopener">Open the page and load requests</a>
         </div>
       </section>
 
       <ol class="steps">
-        <li>Open the webpage you want to review.</li>
-        <li>Click the <strong>Edit this page</strong> bookmark.</li>
-        <li>Make requests, preview them, and export the page.</li>
+        <li>Open the page you want to comment on.</li>
+        <li>Click <strong>PagePatch by Evoltex</strong> in your bookmarks.</li>
+        <li>Mark everything that needs changing, check the preview, and export one file.</li>
       </ol>
 
       <nav class="links" aria-label="PagePatch resources">
-        <a href="/demo/index.html?edit-mode">Open the demo</a>
-        <a href="/pagepatch.js">View the script</a>
+        <a href="/demo/index.html?edit-mode">Try the demo</a>
+        <a href="/pagepatch.js">Open the script</a>
       </nav>
 
-      <footer>Edits stay in your browser. PagePatch does not modify or send data to the website being reviewed.</footer>
+      <footer>Your edits stay in this browser. PagePatch does not change the real site or send your notes anywhere.</footer>
     </main>
 
     <dialog id="manual-install">
       <div class="dialog-content">
-        <h3>Add it manually</h3>
-        <p>The bookmark code is ready to paste.</p>
+        <h3>Add the bookmark yourself</h3>
+        <p>The code is copied. Paste it into a new bookmark.</p>
         <ol>
           <li>Show the bookmarks bar with <code>Ctrl+Shift+B</code>.</li>
           <li>Right-click the bar and choose <strong>Add page</strong>.</li>
-          <li>Name it <strong>✎ PagePatch — Evoltex</strong>.</li>
+          <li>Name it <strong>✎ PagePatch by Evoltex</strong>.</li>
           <li>Paste the copied code into the URL field and save.</li>
         </ol>
         <div class="dialog-actions">
@@ -126,29 +126,23 @@
       const isPortuguese = language === 'pt-BR';
       const text = (english, portuguese) => isPortuguese ? portuguese : english;
       const translations = {
-        'Edit the page. Export one clear request.': 'Edite a página. Exporte uma solicitação clara.',
-        'Select text, SEO structure, containers, and computed CSS directly on a webpage. Preview the result and export every requested change together.': 'Selecione textos, estrutura de SEO, contêineres e CSS calculado diretamente em uma página. Visualize o resultado e exporte todas as alterações solicitadas juntas.',
-        'Add PagePatch to your favorites': 'Adicione o PagePatch aos favoritos',
-        'The easiest option is to drag the orange button directly into your bookmarks bar.': 'A opção mais fácil é arrastar o botão laranja diretamente para a barra de favoritos.',
-        'Copy bookmark code': 'Copiar código do favorito',
-        'If the bookmarks bar is hidden, show it with': 'Se a barra de favoritos estiver oculta, exiba-a com',
-        'Browsers do not permit silent one-click bookmark installation.': 'Os navegadores não permitem instalar um favorito silenciosamente com um clique.',
-        'Open an exported page request': 'Abrir uma solicitação exportada',
-        'Drop a PagePatch Markdown or JSON export here. You can review its destination before opening the original page.': 'Solte aqui uma exportação Markdown ou JSON do PagePatch. Você poderá conferir o destino antes de abrir a página original.',
-        'Drop the request file here': 'Solte o arquivo da solicitação aqui',
+        'Point at the page. Say what should change.': 'Aponte na página. Diga o que precisa mudar.',
+        'Open any webpage, click the text, image, link, list, or layout you want changed, and write the request right there. PagePatch keeps everything together in one file for the person who will build it.': 'Abra qualquer página, clique no texto, imagem, link, lista ou bloco que quer mudar e escreva o pedido ali mesmo. O PagePatch reúne tudo em um único arquivo para quem vai implementar.',
+        'Put PagePatch in your bookmarks': 'Coloque o PagePatch nos seus favoritos',
+        'Drag this button to your bookmarks bar. Once it is there, click it to open PagePatch on any site.': 'Arraste este botão para a barra de favoritos. Depois, basta clicar nele para abrir o PagePatch em qualquer site.',
+        'Copy the code': 'Copiar o código',
+        'Open a request someone sent you': 'Abra uma solicitação que alguém enviou',
+        'Drop an exported PagePatch Markdown or JSON file here. You will see which page it belongs to before opening it.': 'Solte aqui um arquivo Markdown ou JSON exportado pelo PagePatch. Antes de abrir, você verá a qual página ele pertence.',
+        'Drop the file here': 'Solte o arquivo aqui',
         'or click to choose a .md or .json file': 'ou clique para escolher um arquivo .md ou .json',
-        'Open the page, then click your': 'Abra a página e clique no favorito',
-        'favorite to import and preview the requests.': 'para importar e visualizar as solicitações.',
-        'Open page and import': 'Abrir página e importar',
-        'Open the webpage you want to review.': 'Abra a página que deseja revisar.',
-        'Click the': 'Clique no favorito',
-        'bookmark.': '.',
-        'Make requests, preview them, and export the page.': 'Crie solicitações, visualize as alterações e exporte a página.',
-        'Open the demo': 'Abrir demonstração',
-        'View the script': 'Ver o script',
-        'Edits stay in your browser. PagePatch does not modify or send data to the website being reviewed.': 'As edições ficam no seu navegador. O PagePatch não modifica nem envia dados ao site que está sendo revisado.',
-        'Add it manually': 'Adicionar manualmente',
-        'The bookmark code is ready to paste.': 'O código do favorito está pronto para ser colado.',
+        'Open the page and load requests': 'Abrir a página e carregar solicitações',
+        'Open the page you want to comment on.': 'Abra a página que quer comentar.',
+        'Mark everything that needs changing, check the preview, and export one file.': 'Marque tudo o que precisa mudar, confira a prévia e exporte um único arquivo.',
+        'Try the demo': 'Testar a demonstração',
+        'Open the script': 'Abrir o script',
+        'Your edits stay in this browser. PagePatch does not change the real site or send your notes anywhere.': 'Suas edições ficam neste navegador. O PagePatch não altera o site de verdade nem envia suas anotações para nenhum lugar.',
+        'Add the bookmark yourself': 'Adicionar o favorito manualmente',
+        'The code is copied. Paste it into a new bookmark.': 'O código foi copiado. Cole-o em um novo favorito.',
         'Show the bookmarks bar with': 'Exiba a barra de favoritos com',
         'Right-click the bar and choose': 'Clique com o botão direito na barra e escolha',
         'Add page': 'Adicionar página',
@@ -158,8 +152,8 @@
         'Edit this page': 'Editar esta página'
       };
       document.documentElement.lang = language;
-      document.title = text('PagePatch — Edit the page, export the request', 'PagePatch — Edite a página, exporte a solicitação');
-      document.querySelector('meta[name="description"]').content = text('PagePatch turns visual webpage edits into one organized implementation request.', 'O PagePatch transforma edições visuais em uma solicitação de implementação organizada.');
+      document.title = text('PagePatch: mark changes on any webpage', 'PagePatch: marque alterações em qualquer página');
+      document.querySelector('meta[name="description"]').content = text('Mark changes directly on any webpage and export them as one clear implementation request.', 'Marque alterações diretamente em qualquer página e exporte tudo em uma solicitação clara.');
       const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
       let node;
       while ((node = walker.nextNode())) {
@@ -169,16 +163,16 @@
         if (translations[trimmed]) node.nodeValue = original.replace(trimmed, translations[trimmed]);
       }
       if (isPortuguese) {
-        document.querySelector('.hint').innerHTML = 'Se a barra de favoritos estiver oculta, exiba-a com <code>Ctrl+Shift+B</code>. Os navegadores não permitem instalar um favorito silenciosamente com um clique.';
-        document.querySelector('#import-help').innerHTML = 'Abra a página e clique no favorito <strong>PagePatch — Evoltex</strong> para importar e visualizar as solicitações.';
+        document.querySelector('.hint').innerHTML = 'Não está vendo a barra de favoritos? Pressione <code>Ctrl+Shift+B</code>. O navegador não deixa um site criar um favorito por você, então esta etapa precisa ser manual.';
+        document.querySelector('#import-help').innerHTML = 'Abra a página e clique no favorito <strong>PagePatch by Evoltex</strong> para carregar e visualizar as solicitações.';
         const steps = document.querySelectorAll('.steps li');
-        steps[0].textContent = 'Abra a página que deseja revisar.';
-        steps[1].innerHTML = 'Clique no favorito <strong>PagePatch — Evoltex</strong>.';
-        steps[2].textContent = 'Crie solicitações, visualize as alterações e exporte a página.';
+        steps[0].textContent = 'Abra a página que quer comentar.';
+        steps[1].innerHTML = 'Clique em <strong>PagePatch by Evoltex</strong> nos seus favoritos.';
+        steps[2].textContent = 'Marque tudo o que precisa mudar, confira a prévia e exporte um único arquivo.';
         const manualSteps = document.querySelectorAll('#manual-install li');
         manualSteps[0].innerHTML = 'Exiba a barra de favoritos com <code>Ctrl+Shift+B</code>.';
         manualSteps[1].innerHTML = 'Clique com o botão direito na barra e escolha <strong>Adicionar página</strong>.';
-        manualSteps[2].innerHTML = 'Use o nome <strong>✎ PagePatch — Evoltex</strong>.';
+        manualSteps[2].innerHTML = 'Use o nome <strong>✎ PagePatch by Evoltex</strong>.';
         manualSteps[3].textContent = 'Cole o código copiado no campo URL e salve.';
       }
 

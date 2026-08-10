@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>PagePatch export format test</title>
+  </head>
+  <body>
+    <main class="site-main">
+      <section class="content">
+        <h2><span class="question">What is PagePatch?</span></h2>
+        <p id="copy">Original copy</p>
+        <a class="cta" href="/old">Learn more</a>
+        <ul class="features"><li>One</li></ul>
+      </section>
+    </main>
+    <pre id="export-output"></pre>
+    <script>
+      localStorage.setItem("pagepatch:v1", JSON.stringify([
+        { id: "semantic", route: "/test/export-format.html", url: location.href, enabled: true, kind: "seo", selector: "span.question", property: "textContent", before: "What is PagePatch?", after: "What is PagePatch?", semanticTag: "H1", note: "", element: { tag: "span", label: "span.question", text: "What is PagePatch?", path: "body > main.site-main > section.content > h2 > span.question", context: { area: "What is PagePatch?" } } },
+        { id: "note", route: "/test/export-format.html", url: location.href, enabled: true, kind: "note", selector: "p#copy", property: "note", before: "", after: "Keep this copy, but add more spacing below it.", note: "", element: { tag: "p", label: "p#copy", text: "Original copy", path: "body > main.site-main > section.content > p#copy", context: { area: "What is PagePatch?" } } },
+        { id: "metadata", route: "/test/export-format.html", url: location.href, enabled: true, kind: "seo", selector: "meta[name=\"twitter:title\"]", property: "head-content", head: { tag: "meta", key: "name", keyValue: "twitter:title", attribute: "content" }, before: "Old social title", after: "New social title", note: "", element: { tag: "head", label: "X title", text: "Old social title", context: {} } },
+        { id: "link", route: "/test/export-format.html", url: location.href, enabled: true, kind: "seo", selector: "a.cta", property: "attr:href", before: "/old", after: "/new", note: "", element: { tag: "a", label: "a.cta", text: "Learn more", path: "body > main.site-main > section.content > a.cta", context: { area: "What is PagePatch?" } } }
+      ]));
+      const NativeBlob = window.Blob;
+      window.Blob = class TestBlob extends NativeBlob {
+        constructor(parts, options) {
+          super(parts, options);
+          window.__pagePatchExport = parts.join("");
+        }
+      };
+      URL.createObjectURL = function () { return "blob:pagepatch-test"; };
+      URL.revokeObjectURL = function () {};
+      const nativeAnchorClick = HTMLAnchorElement.prototype.click;
+      HTMLAnchorElement.prototype.click = function () {
+        if (this.download && window.__pagePatchExport) document.querySelector("#export-output").textContent = window.__pagePatchExport;
+        else nativeAnchorClick.call(this);
+      };
+    </script>
+    <script src="../dist/pagepatch.js"></script>
+  </body>
+</html>

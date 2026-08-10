@@ -1,10 +1,10 @@
-/* PagePatch v0.3.0 | Standalone visual change-request editor | 2026-08-10T18:23:45.263Z */
+/* PagePatch v0.5.0 | Standalone visual change-request editor | 2026-08-10T19:01:56.815Z */
 (function () {
   "use strict";
 
   if (window.PagePatch && window.PagePatch.version) return;
 
-  var VERSION = "0.3.0";
+  var VERSION = "0.5.0";
   var ICON_DATA = "data:image/png;base64,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";
   var STORAGE_KEY = "pagepatch:v1";
   var EDIT_PARAM = "edit-mode";
@@ -15,20 +15,20 @@
     "Close": "Fechar", "Preview": "Prévia", "Requests": "Solicitações", "Page": "Página", "Delete": "Excluir", "Enable request": "Ativar solicitação",
     "Export active requests": "Exportar solicitações ativas", "Edit page SEO": "Editar SEO da página", "Clear page": "Limpar página",
     "No requests yet. Choose a mode and select something on the page.": "Nenhuma solicitação ainda. Escolha um modo e selecione algo na página.",
-    "Overview": "Visão geral", "Headings": "Cabeçalhos", "Social": "Social", "Images": "Imagens", "Schema": "Schema", "SEO workspace": "Área de trabalho de SEO",
+    "Overview": "Visão geral", "Headings": "Cabeçalhos", "Links": "Links", "Lists": "Listas", "Social": "Social", "Images": "Imagens", "Schema": "Schema", "SEO workspace": "Área de trabalho de SEO",
     "Title": "Título", "Description": "Descrição", "Missing": "Ausente", "H1 headings": "Cabeçalhos H1", "Missing alt text": "Texto alternativo ausente", "Canonical": "Canônica", "JSON-LD blocks": "Blocos JSON-LD",
     "Page title": "Título da página", "Meta description": "Meta descrição", "Canonical URL": "URL canônica", "Indexing": "Indexação", "Link crawling": "Rastreamento de links", "Referrer policy": "Política de referência", "Browser default": "Padrão do navegador", "Save SEO overview": "Salvar visão geral de SEO",
-    "Edit": "Editar", "No headings found.": "Nenhum cabeçalho encontrado.", "Heading hierarchy has no obvious structural warnings.": "A hierarquia de cabeçalhos não apresenta problemas estruturais evidentes.",
-    "Open Graph title": "Título Open Graph", "Open Graph type": "Tipo Open Graph", "Open Graph description": "Descrição Open Graph", "Open Graph image URL": "URL da imagem Open Graph", "Open Graph page URL": "URL da página Open Graph", "X card type": "Tipo de cartão do X", "X title": "Título no X", "X description": "Descrição no X", "X image URL": "URL da imagem no X", "Save social metadata": "Salvar metadados sociais", "No social image": "Sem imagem social", "X preview": "Prévia no X",
+    "Edit": "Editar", "Edit link": "Editar link", "Edit list": "Editar lista", "Locate on page": "Localizar na página", "No headings found.": "Nenhum cabeçalho encontrado.", "No links found.": "Nenhum link encontrado.", "No lists found.": "Nenhuma lista encontrada.", "Heading hierarchy has no obvious structural warnings.": "A hierarquia de cabeçalhos não apresenta problemas estruturais evidentes.",
+    "Open Graph title": "Título Open Graph", "Open Graph type": "Tipo Open Graph", "Open Graph description": "Descrição Open Graph", "Open Graph image": "Imagem Open Graph", "Open Graph image URL": "URL da imagem Open Graph", "Open Graph URL": "URL Open Graph", "Open Graph page URL": "URL da página Open Graph", "X card type": "Tipo de cartão do X", "X title": "Título no X", "X description": "Descrição no X", "X image": "Imagem no X", "X image URL": "URL da imagem no X", "Robots directives": "Diretivas de robôs", "Save social metadata": "Salvar metadados sociais", "No social image": "Sem imagem social", "X preview": "Prévia no X",
     "Edit alt text": "Editar texto alternativo", "ALT MISSING": "ALT AUSENTE", "No images found.": "Nenhuma imagem encontrada.", "Add schema block": "Adicionar bloco de schema", "Save schema": "Salvar schema", "No JSON-LD blocks found.": "Nenhum bloco JSON-LD encontrado.",
-    "Requested text": "Texto solicitado", "Reason or implementation note": "Motivo ou observação de implementação", "Save request": "Salvar solicitação", "Requested semantic element": "Elemento semântico solicitado", "Request": "Solicitação", "Size": "Tamanho", "Display": "Exibição",
+    "Requested text": "Texto solicitado", "Link text": "Texto do link", "Destination URL": "URL de destino", "Reason or implementation note": "Motivo ou observação de implementação", "Save request": "Salvar solicitação", "Requested semantic element": "Elemento semântico solicitado", "Requested list type": "Tipo de lista solicitado", "Request": "Solicitação", "Size": "Tamanho", "Display": "Exibição",
     "Computed styles": "Estilos calculados", "Copy all": "Copiar tudo", "Requested overrides": "Substituições solicitadas", "Editable CSS declarations": "Declarações CSS editáveis", "read-only": "somente leitura",
     "Page SEO": "SEO da página", "Save page SEO": "Salvar SEO da página",
     "PagePatch is active": "PagePatch está ativo", "Request saved": "Solicitação salva", "Page request exported": "Solicitação da página exportada", "Computed styles copied": "Estilos calculados copiados",
     "Page SEO saved": "SEO da página salvo", "SEO overview saved": "Visão geral de SEO salva", "Social metadata saved": "Metadados sociais salvos", "JSON-LD schema saved": "Schema JSON-LD salvo",
     "There are no active requests to export.": "Não há solicitações ativas para exportar.", "The selected element is no longer on the page.": "O elemento selecionado não está mais na página.",
     "This request changes page metadata and has no visible target.": "Esta solicitação altera metadados da página e não possui um alvo visível.", "Add at least one valid CSS declaration.": "Adicione pelo menos uma declaração CSS válida.",
-    "Write the request before saving.": "Escreva a solicitação antes de salvar.", "Describe the requested container or layout change.": "Descreva a alteração solicitada no contêiner ou layout.",
+    "Write the request before saving.": "Escreva a solicitação antes de salvar.", "Describe the requested container or layout change.": "Descreva a alteração solicitada no contêiner ou layout.", "Change something or write a note before saving.": "Altere algo ou escreva uma observação antes de salvar.",
     "Local storage is unavailable. Export before leaving this page.": "O armazenamento local não está disponível. Exporte antes de sair desta página.", "This PagePatch import link is invalid or damaged.": "Este link de importação do PagePatch é inválido ou está corrompido.",
     "Toggle PagePatch": "Abrir ou fechar PagePatch"
   };
@@ -46,7 +46,6 @@
         .replace(/^(\d+) characters$/, "$1 caracteres")
         .replace(/^(\d+) chars$/, "$1 caracteres")
         .replace(/^(\d+) properties · read-only$/, "$1 propriedades · somente leitura")
-        .replace(/^Keep (.+)$/, "Manter $1")
         .replace(/^(\d+) request imported$/, "$1 solicitação importada")
         .replace(/^(\d+) requests imported$/, "$1 solicitações importadas")
         .replace(/^The page has (\d+) H1 headings\.$/, "A página possui $1 cabeçalhos H1.")
@@ -65,6 +64,7 @@
     while ((node = walker.nextNode())) {
       var parentName = node.parentElement ? node.parentElement.tagName : "";
       if (/^(STYLE|SCRIPT|TEXTAREA|CODE|PRE)$/.test(parentName)) continue;
+      if (node.parentElement && node.parentElement.closest(".pp-item-preview,.pp-heading-text,.pp-code,.pp-computed-value")) continue;
       node.nodeValue = translateUiText(node.nodeValue);
     }
     shadow.querySelectorAll("[aria-label],[title],[placeholder]").forEach(function (element) {
@@ -208,6 +208,25 @@
     return parts.join(" > ");
   }
 
+  function domPathFor(element) {
+    if (!element || element.nodeType !== 1) return "";
+    if (element === document.documentElement) return "html";
+    var parts = [];
+    var current = element;
+    while (current && current.nodeType === 1 && current !== document.documentElement) {
+      var part = current.tagName.toLowerCase();
+      if (current.id) part += "#" + cssEscape(current.id);
+      var classes = usefulClasses(current);
+      if (classes.length) part += "." + classes.map(cssEscape).join(".");
+      var siblings = current.parentElement ? Array.from(current.parentElement.children).filter(function (item) { return item.tagName === current.tagName; }) : [];
+      if (!current.id && siblings.length > 1) part += ":nth-of-type(" + (siblings.indexOf(current) + 1) + ")";
+      parts.unshift(part);
+      if (current === document.body) break;
+      current = current.parentElement;
+    }
+    return parts.join(" > ");
+  }
+
   function describeElement(element) {
     if (!element) return {};
     var text = (element.innerText || element.textContent || "").replace(/\s+/g, " ").trim();
@@ -217,6 +236,7 @@
       classes: usefulClasses(element),
       text: text.slice(0, 160),
       label: elementLabel(element),
+      path: domPathFor(element),
       context: describeContext(element)
     };
   }
@@ -344,8 +364,14 @@
       .pp-warn { color: #bd6728; }
       .pp-heading-list { display: grid; gap: 7px; }
       .pp-heading-row { display: grid; grid-template-columns: 38px minmax(0,1fr) auto; align-items: center; gap: 8px; padding: 8px 9px; border: 1px solid #e1e6ef; border-radius: 9px; background: #fff; }
+      .pp-seo-anchor { cursor: pointer; transition: border-color .14s ease, background .14s ease, transform .14s ease; }
+      .pp-seo-anchor:hover, .pp-seo-anchor:focus-visible { border-color: #f36c21; background: #fff8f3; outline: 2px solid rgba(243,108,33,.16); outline-offset: 1px; }
+      .pp-seo-anchor:active { transform: translateY(1px); }
       .pp-heading-level { color: #d9570f; font-size: 11px; font-weight: 900; }
       .pp-heading-text { overflow: hidden; color: #38445b; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+      .pp-heading-copy { min-width: 0; overflow: hidden; }
+      .pp-heading-copy .pp-heading-text { display: block; }
+      .pp-heading-copy small { display: block; overflow: hidden; color: #7a8497; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
       .pp-edit-link { min-height: 28px; padding: 0 9px; border: 0; border-radius: 7px; background: #eef1f7; color: #46536c; font-size: 11px; font-weight: 800; }
       .pp-audit-warning { margin: 0 0 12px; padding: 10px 12px; border-radius: 9px; background: #fff4e8; color: #95501f; font-size: 12px; }
       .pp-social-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 15px; }
@@ -450,11 +476,11 @@
 
   function renderSeoWorkspace() {
     panel.classList.add("pp-wide");
-    var tabs = ["overview", "headings", "social", "images", "schema"].map(function (view) {
-      var labels = IS_PT ? { overview: "Visão geral", headings: "Cabeçalhos", social: "Social", images: "Imagens", schema: "Schema" } : { overview: "Overview", headings: "Headings", social: "Social", images: "Images", schema: "Schema" };
+    var tabs = ["overview", "headings", "links", "lists", "social", "images", "schema"].map(function (view) {
+      var labels = IS_PT ? { overview: "Visão geral", headings: "Cabeçalhos", links: "Links", lists: "Listas", social: "Social", images: "Imagens", schema: "Schema" } : { overview: "Overview", headings: "Headings", links: "Links", lists: "Lists", social: "Social", images: "Images", schema: "Schema" };
       return '<button type="button" data-action="seo-tab" data-view="' + view + '" aria-pressed="' + (state.seoView === view) + '">' + labels[view] + "</button>";
     }).join("");
-    var content = state.seoView === "headings" ? seoHeadingsHtml() : state.seoView === "social" ? seoSocialHtml() :
+    var content = state.seoView === "headings" ? seoHeadingsHtml() : state.seoView === "links" ? seoLinksHtml() : state.seoView === "lists" ? seoListsHtml() : state.seoView === "social" ? seoSocialHtml() :
       state.seoView === "images" ? seoImagesHtml() : state.seoView === "schema" ? seoSchemaHtml() : seoOverviewHtml();
     panel.innerHTML = panelHeader("SEO workspace") + '<nav class="pp-seo-tabs">' + tabs + '</nav><div class="pp-content">' + content + "</div>";
     localizeShadow();
@@ -484,11 +510,15 @@
     var h1Count = document.querySelectorAll("h1").length;
     var missingAlt = document.querySelectorAll("img:not([alt]), img[alt='']").length;
     var schemaCount = document.querySelectorAll('script[type="application/ld+json"]').length;
+    var linkCount = document.querySelectorAll("a").length;
+    var missingLinks = Array.from(document.querySelectorAll("a")).filter(function (link) { return !link.getAttribute("href") || !link.textContent.trim(); }).length;
+    var listCount = document.querySelectorAll("ul,ol").length;
     var audit = '<div class="pp-seo-grid">' +
       auditCard("Title", title ? title.length + " characters" : "Missing", !!title && title.length <= 60) +
       auditCard("Description", description ? description.length + " characters" : "Missing", !!description && description.length <= 160) +
       auditCard("H1 headings", String(h1Count), h1Count === 1) + auditCard("Missing alt text", String(missingAlt), missingAlt === 0) +
-      auditCard("Canonical", canonical || "Missing", !!canonical) + auditCard("JSON-LD blocks", String(schemaCount), schemaCount > 0) + "</div>";
+      auditCard("Canonical", canonical || "Missing", !!canonical) + auditCard("JSON-LD blocks", String(schemaCount), schemaCount > 0) +
+      auditCard("Links", linkCount + (missingLinks ? " · " + missingLinks + " need review" : ""), missingLinks === 0) + auditCard("Lists", String(listCount), true) + "</div>";
     return audit + '<form class="pp-fields" data-form="seo-overview" style="margin-top:16px">' +
       field("Page title", "input", "title", title) + field("Meta description", "textarea", "description", description) +
       field("Canonical URL", "input", "canonical", canonical) + '<div class="pp-grid">' +
@@ -516,11 +546,43 @@
     var list = headings.map(function (heading) {
       var level = Number(heading.tagName.slice(1));
       var selector = selectorFor(heading);
-      return '<div class="pp-heading-row" style="margin-left:' + ((level - 1) * 16) + 'px"><span class="pp-heading-level">H' + level + '</span><span class="pp-heading-text">' + escapeHtml(heading.textContent.trim() || "(empty heading)") + '</span>' +
+      return '<div class="pp-heading-row pp-seo-anchor" role="button" tabindex="0" title="Locate on page" data-action="seo-locate" data-selector="' + escapeHtml(selector) + '" style="margin-left:' + ((level - 1) * 16) + 'px"><span class="pp-heading-level">H' + level + '</span><span class="pp-heading-text">' + escapeHtml(heading.textContent.trim() || "(empty heading)") + '</span>' +
         '<button class="pp-edit-link" type="button" data-action="seo-heading" data-selector="' + escapeHtml(selector) + '">Edit</button></div>';
     }).join("");
     return (warnings.length ? warnings.map(function (warning) { return '<p class="pp-audit-warning">' + escapeHtml(warning) + "</p>"; }).join("") : '<p class="pp-audit-warning pp-ok">Heading hierarchy has no obvious structural warnings.</p>') +
       '<div class="pp-heading-list">' + (list || '<div class="pp-empty">No headings found.</div>') + "</div>";
+  }
+
+  function seoLinksHtml() {
+    var links = Array.from(document.querySelectorAll("a")).filter(function (link) { return !link.closest("pagepatch-root"); });
+    var missingHref = links.filter(function (link) { return !link.getAttribute("href"); }).length;
+    var missingText = links.filter(function (link) { return !link.textContent.trim() && !link.getAttribute("aria-label") && !link.querySelector("img[alt]"); }).length;
+    var unsafeBlank = links.filter(function (link) { return link.target === "_blank" && !(link.rel || "").split(/\s+/).includes("noopener"); }).length;
+    var warnings = [];
+    if (missingHref) warnings.push(missingHref + languageText(" link(s) have no destination.", " link(s) não possuem destino."));
+    if (missingText) warnings.push(missingText + languageText(" link(s) have no accessible text.", " link(s) não possuem texto acessível."));
+    if (unsafeBlank) warnings.push(unsafeBlank + languageText(" new-tab link(s) are missing noopener.", " link(s) que abrem nova aba não possuem noopener."));
+    var rows = links.map(function (link) {
+      var href = link.getAttribute("href") || languageText("Missing destination", "Destino ausente");
+      var text = link.textContent.trim() || link.getAttribute("aria-label") || languageText("Untitled link", "Link sem título");
+      var selector = selectorFor(link);
+      return '<div class="pp-heading-row pp-seo-anchor" role="button" tabindex="0" title="Locate on page" data-action="seo-locate" data-selector="' + escapeHtml(selector) + '"><span class="pp-heading-level">A</span><span class="pp-heading-copy"><span class="pp-heading-text">' + escapeHtml(text) + '</span><small title="' + escapeHtml(href) + '">' + escapeHtml(href) + '</small></span>' +
+        '<button class="pp-edit-link" type="button" data-action="seo-link" data-selector="' + escapeHtml(selector) + '">Edit link</button></div>';
+    }).join("");
+    return (warnings.length ? warnings.map(function (warning) { return '<p class="pp-audit-warning">' + escapeHtml(warning) + "</p>"; }).join("") : '<p class="pp-audit-warning pp-ok">' + languageText("Links have destinations and accessible text.", "Os links possuem destinos e texto acessível.") + '</p>') +
+      '<div class="pp-heading-list">' + (rows || '<div class="pp-empty">No links found.</div>') + '</div>';
+  }
+
+  function seoListsHtml() {
+    var lists = Array.from(document.querySelectorAll("ul,ol")).filter(function (list) { return !list.closest("pagepatch-root"); });
+    var rows = lists.map(function (list) {
+      var count = Array.from(list.children).filter(function (child) { return child.tagName === "LI"; }).length;
+      var preview = (list.innerText || list.textContent || "").replace(/\s+/g, " ").trim().slice(0, 120) || languageText("Empty list", "Lista vazia");
+      var selector = selectorFor(list);
+      return '<div class="pp-heading-row pp-seo-anchor" role="button" tabindex="0" title="Locate on page" data-action="seo-locate" data-selector="' + escapeHtml(selector) + '"><span class="pp-heading-level">' + list.tagName + '</span><span class="pp-heading-copy"><span class="pp-heading-text">' + escapeHtml(preview) + '</span><small>' + count + languageText(count === 1 ? " item" : " items", count === 1 ? " item" : " itens") + '</small></span>' +
+        '<button class="pp-edit-link" type="button" data-action="seo-list" data-selector="' + escapeHtml(selector) + '">Edit list</button></div>';
+    }).join("");
+    return '<div class="pp-heading-list">' + (rows || '<div class="pp-empty">No lists found.</div>') + '</div>';
   }
 
   function seoSocialHtml() {
@@ -565,7 +627,7 @@
     var cards = images.map(function (image) {
       var selector = selectorFor(image);
       var alt = image.getAttribute("alt");
-      return '<article class="pp-image-card"><div class="pp-image-thumb"><img src="' + escapeHtml(image.currentSrc || image.src) + '" alt=""></div><div class="pp-image-info"><p title="' + escapeHtml(image.currentSrc || image.src) + '">' + escapeHtml(image.currentSrc || image.src) + '</p>' +
+      return '<article class="pp-image-card pp-seo-anchor" role="button" tabindex="0" title="Locate on page" data-action="seo-locate" data-selector="' + escapeHtml(selector) + '"><div class="pp-image-thumb"><img src="' + escapeHtml(image.currentSrc || image.src) + '" alt=""></div><div class="pp-image-info"><p title="' + escapeHtml(image.currentSrc || image.src) + '">' + escapeHtml(image.currentSrc || image.src) + '</p>' +
         '<span class="pp-badge ' + (alt ? "" : "pp-missing") + '">' + escapeHtml(alt ? "ALT: " + alt : "ALT MISSING") + '</span><span class="pp-badge">' + (image.naturalWidth || image.width) + "×" + (image.naturalHeight || image.height) + '</span>' +
         '<div class="pp-actions"><button class="pp-edit-link" type="button" data-action="seo-image" data-selector="' + escapeHtml(selector) + '">Edit alt text</button></div></div></article>';
     }).join("");
@@ -595,7 +657,9 @@
     var element;
     try { element = document.querySelector(selector); } catch (_) { element = null; }
     if (!element) { announce("The selected element is no longer on the page.", true); return; }
-    element.scrollIntoView({ behavior: "smooth", block: "center" });
+    revealElement(element, function () {
+      try { return document.querySelector(selector); } catch (_) { return null; }
+    });
     state.selected = element; state.panel = "editor"; renderPanel();
   }
 
@@ -605,7 +669,8 @@
     var selector = selectorFor(element);
     var title = mode.charAt(0).toUpperCase() + mode.slice(1) + " · " + elementLabel(element);
     var fields = '<div class="pp-code">' + escapeHtml(selector) + "</div>";
-    var existingNote = "";
+    var existingElementChange = pageChanges().find(function (change) { return change.selector === selector && change.kind === mode; });
+    var existingNote = existingElementChange ? existingElementChange.note || "" : "";
     panel.classList.toggle("pp-wide", mode === "style");
 
     if (mode === "text") {
@@ -625,9 +690,15 @@
         '<textarea class="pp-css-editor" name="css" spellcheck="false" placeholder="color: #111827;\nfont-size: 42px;">' + escapeHtml(requestedCss) + '</textarea></div></section></div>';
     } else if (mode === "seo") {
       var seo = seoProperty(element);
-      fields += field(seo.label, "textarea", "value", seo.value);
+      if (element.tagName === "A") {
+        fields += field("Link text", "textarea", "value", seo.value) + field("Destination URL", "input", "href", element.getAttribute("href") || "");
+      } else if (/^(UL|OL)$/.test(element.tagName)) {
+        fields += '<div class="pp-field"><label>Requested list type</label><select name="semanticTag"><option value="">' + languageText("Keep ", "Manter ") + element.tagName + '</option><option value="' + (element.tagName === "UL" ? "OL" : "UL") + '">' + (element.tagName === "UL" ? "OL" : "UL") + '</option></select></div>';
+      } else {
+        fields += field(seo.label, "textarea", "value", seo.value);
+      }
       if (/^(H[1-6]|P|SPAN)$/.test(element.tagName)) {
-        fields += '<div class="pp-field"><label>Requested semantic element</label><select name="semanticTag"><option value="">Keep ' + element.tagName + '</option>' +
+        fields += '<div class="pp-field"><label>Requested semantic element</label><select name="semanticTag"><option value="">' + languageText("Keep ", "Manter ") + element.tagName + '</option>' +
           ["H1", "H2", "H3", "H4", "H5", "H6", "P", "SPAN"].filter(function (tag) { return tag !== element.tagName; }).map(function (tag) {
             return '<option value="' + tag + '">' + tag + "</option>";
           }).join("") + "</select></div>";
@@ -654,6 +725,7 @@
   function seoProperty(element) {
     if (element.tagName === "IMG") return { property: "attr:alt", label: "Image alt text", value: element.getAttribute("alt") || "" };
     if (element.tagName === "A") return { property: "textContent", label: "Link text", value: element.textContent.trim() };
+    if (/^(UL|OL)$/.test(element.tagName)) return { property: "semantic-tag", label: "List type", value: element.tagName };
     return { property: "textContent", label: element.tagName + " content", value: element.textContent.trim() };
   }
 
@@ -750,17 +822,44 @@
     if (action === "clear") clearPage();
     if (action === "page-seo") { renderPageSeoEditor(); return; }
     if (action === "seo-tab") { state.seoView = target.dataset.view; state.panel = "seo"; renderUi(); return; }
-    if (action === "seo-heading" || action === "seo-image") { openSeoElement(target.dataset.selector); return; }
+    if (action === "seo-locate") { locateSeoElement(target.dataset.selector); return; }
+    if (action === "seo-heading" || action === "seo-image" || action === "seo-link" || action === "seo-list") { openSeoElement(target.dataset.selector); return; }
     if (action === "schema-add") { state.schemaDrafts += 1; renderSeoWorkspace(); return; }
     renderUi();
   }
 
   function onUiKeydown(event) {
     if (event.key !== "Enter" && event.key !== " ") return;
-    var target = event.target.closest('[data-action="locate-change"]');
+    var target = event.target.closest('[data-action="locate-change"],[data-action="seo-locate"]');
     if (!target || event.target !== target) return;
     event.preventDefault();
-    locateChange(target.dataset.id);
+    if (target.dataset.action === "seo-locate") locateSeoElement(target.dataset.selector);
+    else locateChange(target.dataset.id);
+  }
+
+  function revealElement(target, resolver) {
+    if (!target || !target.getBoundingClientRect) return false;
+    target.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
+    state.selected = target;
+    setTimeout(function () {
+      if (!target.isConnected && resolver) target = resolver() || target;
+      if (target.animate) target.animate([
+        { outline: "0 solid rgba(243,108,33,0)", boxShadow: "0 0 0 0 rgba(243,108,33,0)" },
+        { outline: "4px solid #f36c21", boxShadow: "0 0 0 12px rgba(243,108,33,.24)" },
+        { outline: "2px solid #f36c21", boxShadow: "0 0 0 4px rgba(243,108,33,.14)" },
+        { outline: "0 solid rgba(243,108,33,0)", boxShadow: "0 0 0 0 rgba(243,108,33,0)" }
+      ], { duration: 1300, iterations: 2, easing: "ease-in-out" });
+      queueRedraw();
+    }, 350);
+    return true;
+  }
+
+  function locateSeoElement(selector) {
+    var element;
+    try { element = document.querySelector(selector); } catch (_) { element = null; }
+    if (!revealElement(element, function () {
+      try { return document.querySelector(selector); } catch (_) { return null; }
+    })) announce("The selected element is no longer on the page.", true);
   }
 
   function locateChange(id) {
@@ -771,18 +870,7 @@
       announce("This request changes page metadata and has no visible target.", true);
       return;
     }
-    target.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
-    state.selected = target;
-    setTimeout(function () {
-      if (!target.isConnected) target = targetForChange(change) || target;
-      if (target.animate) target.animate([
-        { outline: "0 solid rgba(243,108,33,0)", boxShadow: "0 0 0 0 rgba(243,108,33,0)" },
-        { outline: "4px solid #f36c21", boxShadow: "0 0 0 12px rgba(243,108,33,.24)" },
-        { outline: "2px solid #f36c21", boxShadow: "0 0 0 4px rgba(243,108,33,.14)" },
-        { outline: "0 solid rgba(243,108,33,0)", boxShadow: "0 0 0 0 rgba(243,108,33,0)" }
-      ], { duration: 1300, iterations: 2, easing: "ease-in-out" });
-      queueRedraw();
-    }, 350);
+    revealElement(target, function () { return targetForChange(change); });
   }
 
   function onUiSubmit(event) {
@@ -910,9 +998,35 @@
       record.property = "textContent"; record.before = draftBefore !== null ? draftBefore : element.textContent.trim(); record.after = value;
     } else if (mode === "seo") {
       var seo = seoProperty(element);
-      record.property = seo.property; record.before = draftBefore !== null ? draftBefore : seo.value; record.after = value;
       var semanticTag = String(data.get("semanticTag") || "");
-      if (semanticTag && semanticTag !== element.tagName) record.semanticTag = semanticTag;
+      if (element.tagName === "A") {
+        var beforeText = draftBefore !== null ? draftBefore : seo.value;
+        var beforeHref = element.getAttribute("href") || "";
+        var afterHref = String(data.get("href") || "").trim();
+        var savedLinkChange = false;
+        if (beforeText !== value) {
+          upsertChange(Object.assign({}, record, { property: "textContent", before: beforeText, after: value }));
+          savedLinkChange = true;
+        }
+        if (beforeHref !== afterHref) {
+          upsertChange(Object.assign({}, record, { property: "attr:href", before: beforeHref, after: afterHref, note: savedLinkChange ? "" : note }));
+          savedLinkChange = true;
+        }
+        if (!savedLinkChange && note) upsertChange(Object.assign({}, record, { kind: "note", property: "note", before: "", after: note, note: "" }));
+        else if (!savedLinkChange) { announce("Change something or write a note before saving.", true); return; }
+        afterSave("Request saved");
+        return;
+      }
+      if (/^(UL|OL)$/.test(element.tagName)) {
+        if (semanticTag && semanticTag !== element.tagName) {
+          record.property = "semantic-tag"; record.before = element.tagName; record.after = semanticTag;
+        } else if (note) {
+          record.kind = "note"; record.property = "note"; record.before = ""; record.after = note; record.note = "";
+        } else { announce("Change something or write a note before saving.", true); return; }
+      } else {
+        record.property = seo.property; record.before = draftBefore !== null ? draftBefore : seo.value; record.after = value;
+        if (semanticTag && semanticTag !== element.tagName) record.semanticTag = semanticTag;
+      }
     } else if (mode === "style") {
       var parsed = parseDeclarations(String(data.get("css") || ""));
       if (!Object.keys(parsed.declarations).length) { announce("Add at least one valid CSS declaration.", true); return; }
@@ -926,6 +1040,10 @@
     } else if (mode === "div") {
       if (!note) { announce("Describe the requested container or layout change.", true); return; }
       record.property = "note"; record.before = ""; record.after = note; record.note = "";
+    }
+    if ((mode === "text" || mode === "seo") && record.property !== "note" && record.before === record.after && !record.semanticTag) {
+      if (!note) { announce("Change something or write a note before saving.", true); return; }
+      record.kind = "note"; record.property = "note"; record.before = ""; record.after = note; record.note = "";
     }
     upsertChange(record);
     afterSave("Request saved");
@@ -945,7 +1063,7 @@
           Object.keys(record.after).forEach(function (property) { record.before[property] = restoredComputed.getPropertyValue(property).trim(); });
         }
       }
-      existing.property = record.property; existing.after = record.after; existing.note = record.note; existing.enabled = true;
+      existing.kind = record.kind; existing.property = record.property; existing.after = record.after; existing.note = record.note; existing.element = record.element || existing.element; existing.enabled = true;
       if (record.property === "style") { existing.before = record.before; existing.priorities = record.priorities; existing.cssText = record.cssText; }
       if (record.kind === "seo" && record.property === "textContent") existing.semanticTag = record.semanticTag || "";
     } else {
@@ -1080,7 +1198,20 @@
       return;
     }
     if (!target) return;
-    if (change.property === "textContent") {
+    if (change.property === "semantic-tag") {
+      var currentSemanticRuntime = state.runtimeOriginals.get(change.id);
+      if (!currentSemanticRuntime || !currentSemanticRuntime.element || (!currentSemanticRuntime.element.isConnected && target !== currentSemanticRuntime.element)) {
+        state.runtimeOriginals.set(change.id, { element: target, originalElement: target });
+      }
+      var semanticRuntime = state.runtimeOriginals.get(change.id);
+      if (target.tagName !== change.after) {
+        var semanticReplacement = document.createElement(change.after.toLowerCase());
+        Array.from(target.attributes).forEach(function (attribute) { semanticReplacement.setAttribute(attribute.name, attribute.value); });
+        semanticReplacement.innerHTML = target.innerHTML;
+        target.replaceWith(semanticReplacement);
+        semanticRuntime.element = semanticReplacement;
+      }
+    } else if (change.property === "textContent") {
       var existingTextRuntime = state.runtimeOriginals.get(change.id);
       if (!existingTextRuntime || !existingTextRuntime.element || !existingTextRuntime.element.isConnected) {
         state.runtimeOriginals.set(change.id, { value: change.before !== undefined ? change.before : target.textContent, element: target, originalElement: target });
@@ -1139,7 +1270,9 @@
     } else {
       var target = targetForChange(change);
       if (!target) return;
-      if (change.property === "textContent") {
+      if (change.property === "semantic-tag") {
+        if (original.originalElement && target !== original.originalElement) target.replaceWith(original.originalElement);
+      } else if (change.property === "textContent") {
         if (original.originalElement && target !== original.originalElement) {
           target.replaceWith(original.originalElement);
           target = original.originalElement;
@@ -1164,7 +1297,7 @@
     var target = document.elementFromPoint(event.clientX, event.clientY);
     if (!target || target === host || target.closest && target.closest("pagepatch-root")) return;
     if (state.mode === "div") target = target.closest("div,section,main,header,footer,article,nav,aside") || target;
-    if (state.mode === "text" || state.mode === "seo") target = target.closest("h1,h2,h3,h4,h5,h6,p,span,a,button,label,li,img") || target;
+    if (state.mode === "text" || state.mode === "seo") target = target.closest("h1,h2,h3,h4,h5,h6,p,span,a,button,label,ul,ol,li,img") || target;
     state.hovered = target;
     drawHover(target);
   }
@@ -1173,7 +1306,7 @@
     if (!state.running || event.composedPath().indexOf(host) >= 0) return;
     var target = event.target;
     if (state.mode === "div") target = target.closest("div,section,main,header,footer,article,nav,aside") || target;
-    if (state.mode === "text" || state.mode === "seo") target = target.closest("h1,h2,h3,h4,h5,h6,p,span,a,button,label,li,img") || target;
+    if (state.mode === "text" || state.mode === "seo") target = target.closest("h1,h2,h3,h4,h5,h6,p,span,a,button,label,ul,ol,li,img") || target;
     if (!target || !target.tagName || target === document.body || target === document.documentElement) return;
     event.preventDefault(); event.stopPropagation(); event.stopImmediatePropagation();
     restoreDraft();
@@ -1199,7 +1332,7 @@
     var selector = "";
     if (state.mode === "div") selector = "div,section,main,header,footer,article,nav,aside";
     if (state.mode === "text") selector = "h1,h2,h3,h4,h5,h6,p,span,a,button,label,li";
-    if (state.mode === "seo") selector = "h1,h2,h3,h4,h5,h6,p,span,a,img";
+    if (state.mode === "seo") selector = "h1,h2,h3,h4,h5,h6,p,span,a,ul,ol,li,img";
     if (selector) Array.from(document.querySelectorAll(selector)).slice(0, 600).forEach(function (element) {
       if (!visible(element) || element.closest("pagepatch-root")) return;
       var rect = element.getBoundingClientRect();
@@ -1220,7 +1353,7 @@
   function overlayColor(element, mode) {
     if (mode === "div") return "rgba(61, 89, 139, .20)";
     if (mode === "text") return "rgba(45, 117, 220, .32)";
-    var colors = { H1: "#dc3f59", H2: "#e56a32", H3: "#d89a20", H4: "#af8b22", H5: "#8e7929", H6: "#786a32", P: "#3478d4", SPAN: "#4e8fdc", A: "#7557d9", IMG: "#278a67" };
+    var colors = { H1: "#dc3f59", H2: "#e56a32", H3: "#d89a20", H4: "#af8b22", H5: "#8e7929", H6: "#786a32", P: "#3478d4", SPAN: "#4e8fdc", A: "#7557d9", UL: "#d9570f", OL: "#c45c18", LI: "#df7b32", IMG: "#278a67" };
     return colors[element.tagName] || "#f36c21";
   }
 
@@ -1339,23 +1472,21 @@
     var lines = [languageText("# Page change request", "# Solicitação de alterações da página"), "", languageText("Requested changes for **", "Alterações solicitadas para **") + pageUrl + "**.", "", languageText("- Exported: ", "- Exportado em: ") + exportedAt, languageText("- Viewport reviewed: ", "- Área de visualização revisada: ") + innerWidth + " × " + innerHeight, languageText("- Active requests: ", "- Solicitações ativas: ") + changes.length, "", languageText("## Summary", "## Resumo"), ""];
     changes.forEach(function (change, index) {
       var context = exportContext(change);
-      lines.push((index + 1) + ". **" + requestTitle(change) + "** — " + readableElement(change) + (context.area ? languageText(' in “', ' em “') + context.area + '”' : ""));
+      var targetSummary = isPageMetadataChange(change) ? "" : " — " + readableElement(change, false);
+      lines.push((index + 1) + ". **" + requestTitle(change) + "**" + targetSummary);
     });
     lines.push("");
     changes.forEach(function (change, index) {
       var context = exportContext(change);
-      lines.push("## " + (index + 1) + ". " + requestTitle(change), "", languageText("**Selected element:** ", "**Elemento selecionado:** ") + readableElement(change));
-      if (context.area) lines.push("", languageText("**Page area:** “", "**Área da página:** “") + context.area + "”");
-      if (context.nearby && context.nearby !== context.area && context.nearby !== String(change.before || "") && context.nearby !== String(change.after || "")) {
-        lines.push("", languageText("**Nearby content:**", "**Conteúdo próximo:**"), "", quoteBlock(context.nearby));
-      }
-      if (change.semanticTag) lines.push("", languageText("**Requested semantic element:** `", "**Elemento semântico solicitado:** `") + change.semanticTag + "`");
+      lines.push("## " + (index + 1) + ". " + requestTitle(change));
+      if (usefulPageArea(change, context)) lines.push("", languageText("**Page area:** “", "**Área da página:** “") + context.area + "”");
       appendHumanChange(lines, change);
       var noteIsRequest = (change.property === "note" || change.kind === "div" || change.kind === "note") && (!change.after || change.after === change.note);
       if (change.note && !noteIsRequest) lines.push("", languageText("### Reason or implementation note", "### Motivo ou observação de implementação"), "", change.note);
-      lines.push("", "<details>", "<summary>" + languageText("Technical details", "Detalhes técnicos") + "</summary>", "", languageText("- Selector: `", "- Seletor: `") + change.selector + "`");
+      var fullPath = exportDomPath(change);
+      lines.push("", "<details>", "<summary>" + languageText("Technical details", "Detalhes técnicos") + "</summary>", "", languageText("- DOM path: `", "- Caminho no DOM: `") + (fullPath || change.selector) + "`");
+      if (fullPath && change.selector && fullPath !== change.selector) lines.push(languageText("- Stable selector: `", "- Seletor estável: `") + change.selector + "`");
       if (change.property) lines.push(languageText("- Property: `", "- Propriedade: `") + change.property + "`");
-      if (context.parent) lines.push(languageText("- Parent: `", "- Elemento pai: `") + context.parent + "`");
       lines.push("", "</details>", "");
     });
     var importChanges = JSON.parse(JSON.stringify(changes));
@@ -1367,25 +1498,46 @@
   }
 
   function requestTitle(change) {
-    if (change.property === "note" || change.kind === "div" || change.kind === "note") return languageText("Element or layout request", "Solicitação de elemento ou layout");
+    if (change.kind === "note") return languageText("Implementation note", "Observação de implementação");
+    if (change.property === "note" || change.kind === "div") return languageText("Element or layout request", "Solicitação de elemento ou layout");
     if (change.property === "textContent" && change.semanticTag) return String(change.before || "") === String(change.after || "") ? languageText("Change semantic element", "Alterar elemento semântico") : languageText("Change text and semantic element", "Alterar texto e elemento semântico");
     if (change.property === "textContent") return languageText("Change selected text", "Alterar texto selecionado");
     if (change.property === "attr:alt") return languageText("Change image alternative text", "Alterar texto alternativo da imagem");
+    if (change.property === "attr:href") return languageText("Change link destination", "Alterar destino do link");
+    if (change.property === "semantic-tag") return languageText("Change list type", "Alterar tipo de lista");
     if (change.property === "style") return languageText("Change visual styling", "Alterar estilo visual");
     if (change.property === "document-title") return languageText("Change page title", "Alterar título da página");
     if (change.property === "meta-description") return languageText("Change meta description", "Alterar meta descrição");
     if (change.property === "jsonld") return languageText("Update JSON-LD structured data", "Atualizar dados estruturados JSON-LD");
-    if (change.property === "head-content") return languageText("Change ", "Alterar ") + String((change.element || {}).label || languageText("page metadata", "metadados da página")).toLowerCase();
+    if (change.property === "head-content") {
+      var metadataLabel = translateUiText(String((change.element || {}).label || languageText("page metadata", "metadados da página")));
+      if (IS_PT) metadataLabel = metadataLabel.charAt(0).toLowerCase() + metadataLabel.slice(1);
+      return languageText("Change ", "Alterar ") + metadataLabel;
+    }
     return languageText("Update ", "Atualizar ") + String((change.element || {}).label || languageText("selected element", "elemento selecionado"));
   }
 
-  function readableElement(change) {
+  function isPageMetadataChange(change) {
+    return change.property === "document-title" || change.property === "meta-description" || change.property === "head-content" || change.property === "jsonld";
+  }
+
+  function normalizedText(value) {
+    return String(value == null ? "" : value).replace(/\s+/g, " ").trim();
+  }
+
+  function usefulPageArea(change, context) {
+    if (!context || !context.area || isPageMetadataChange(change)) return false;
+    var area = normalizedText(context.area);
+    return area && area !== normalizedText(change.before) && area !== normalizedText(change.after) && area !== normalizedText(change.element && change.element.text);
+  }
+
+  function readableElement(change, includeLabel) {
     var element = change.element || {};
     var names = IS_PT
-      ? { h1: "Cabeçalho H1", h2: "Cabeçalho H2", h3: "Cabeçalho H3", h4: "Cabeçalho H4", h5: "Cabeçalho H5", h6: "Cabeçalho H6", p: "Parágrafo", span: "Trecho de texto", a: "Link", img: "Imagem", div: "Contêiner", section: "Seção", title: "Título da página", meta: "Metadados", script: "Dados estruturados" }
-      : { h1: "H1 heading", h2: "H2 heading", h3: "H3 heading", h4: "H4 heading", h5: "H5 heading", h6: "H6 heading", p: "Paragraph", span: "Text span", a: "Link", img: "Image", div: "Container", section: "Section", title: "Page title", meta: "Metadata", script: "Structured data" };
+      ? { h1: "Cabeçalho H1", h2: "Cabeçalho H2", h3: "Cabeçalho H3", h4: "Cabeçalho H4", h5: "Cabeçalho H5", h6: "Cabeçalho H6", p: "Parágrafo", span: "Trecho de texto", a: "Link", ul: "Lista não ordenada", ol: "Lista ordenada", li: "Item de lista", img: "Imagem", div: "Contêiner", section: "Seção", title: "Título da página", meta: "Metadados", script: "Dados estruturados" }
+      : { h1: "H1 heading", h2: "H2 heading", h3: "H3 heading", h4: "H4 heading", h5: "H5 heading", h6: "H6 heading", p: "Paragraph", span: "Text span", a: "Link", ul: "Unordered list", ol: "Ordered list", li: "List item", img: "Image", div: "Container", section: "Section", title: "Page title", meta: "Metadata", script: "Structured data" };
     var name = names[element.tag] || (element.tag ? element.tag.toUpperCase() + languageText(" element", " elemento") : languageText("Page element", "Elemento da página"));
-    return name + (element.label ? " (`" + element.label + "`)" : "");
+    return name + (includeLabel === false || !element.label ? "" : " (`" + element.label + "`)");
   }
 
   function exportContext(change) {
@@ -1393,6 +1545,12 @@
     if (stored && (stored.area || stored.nearby || stored.parent)) return stored;
     var target = targetForChange(change);
     return target ? describeContext(target) : {};
+  }
+
+  function exportDomPath(change) {
+    if (change.element && change.element.path) return change.element.path;
+    var target = targetForChange(change);
+    return target ? domPathFor(target) : "";
   }
 
   function quoteBlock(value) {
@@ -1405,13 +1563,32 @@
       if (requested) lines.push("", languageText("### Request", "### Solicitação"), "", quoteBlock(requested));
       return;
     }
+    if (change.property === "semantic-tag") {
+      lines.push("", languageText("### Requested change", "### Alteração solicitada"), "", languageText("Change the list from `", "Trocar a lista de `") + change.before + languageText("` to `", "` para `") + change.after + languageText("`. Keep its list items unchanged.", "`. Manter os itens da lista inalterados."));
+      return;
+    }
+    if (change.semanticTag) {
+      var originalTag = String((change.element || {}).tag || "element").toUpperCase();
+      var textChanged = normalizedText(change.before) !== normalizedText(change.after);
+      lines.push("", languageText("### Requested change", "### Alteração solicitada"), "", languageText("Change `", "Trocar de `") + originalTag + languageText("` to `", "` para `") + change.semanticTag + "`." + (textChanged ? languageText(" Replace the text as shown below.", " Substituir também o texto conforme indicado abaixo.") : languageText(" Keep the text unchanged.", " Manter o texto inalterado.")));
+      if (change.before !== undefined && change.before !== "") lines.push("", textChanged ? languageText("### Current text", "### Texto atual") : languageText("### Reference text", "### Texto de referência"), "", quoteBlock(change.before));
+      if (textChanged && change.after !== undefined && change.after !== "") lines.push("", languageText("### New text", "### Novo texto"), "", quoteBlock(change.after));
+      return;
+    }
     if (change.property === "style") {
       if (change.before && Object.keys(change.before).length) lines.push("", languageText("### Current values", "### Valores atuais"), "", fenced(declarationsToCss(change.before)));
       lines.push("", languageText("### Requested CSS", "### CSS solicitado"), "", fenced(declarationsToCss(change.after, change.priorities)));
       return;
     }
+    if (change.property === "attr:href") {
+      var linkText = normalizedText(change.element && change.element.text);
+      if (linkText) lines.push("", languageText("### Link text for reference", "### Texto do link para referência"), "", quoteBlock(linkText));
+      if (change.before !== undefined) lines.push("", languageText("### Current destination", "### Destino atual"), "", quoteBlock(change.before || languageText("(no destination)", "(sem destino)")));
+      lines.push("", languageText("### New destination", "### Novo destino"), "", quoteBlock(change.after || languageText("(remove destination)", "(remover destino)")));
+      return;
+    }
     if (change.before !== undefined && change.before !== "") lines.push("", change.property === "textContent" ? languageText("### Current text", "### Texto atual") : languageText("### Current value", "### Valor atual"), "", quoteBlock(typeof change.before === "string" ? change.before : JSON.stringify(change.before, null, 2)));
-    if (requested !== undefined && requested !== "") lines.push("", change.property === "textContent" ? languageText("### Requested text", "### Texto solicitado") : languageText("### Requested value", "### Valor solicitado"), "", quoteBlock(typeof requested === "string" ? requested : JSON.stringify(requested, null, 2)));
+    if (requested !== undefined && requested !== "") lines.push("", change.property === "textContent" ? languageText("### New text", "### Novo texto") : languageText("### Requested value", "### Valor solicitado"), "", quoteBlock(typeof requested === "string" ? requested : JSON.stringify(requested, null, 2)));
   }
 
   function fenced(value) {

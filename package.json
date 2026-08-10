@@ -1,10 +1,14 @@
 {
   "name": "pagepatch",
-  "version": "0.3.0",
+  "version": "0.5.0",
   "private": true,
   "description": "A dependency-free visual webpage change-request editor.",
   "scripts": {
     "build": "node scripts/build.mjs",
-    "check": "node --check src/pagepatch.js && node --check dist/pagepatch.js"
+    "check": "node --check src/pagepatch.js && node --check dist/pagepatch.js",
+    "test": "npm run build && node --test test/pagepatch.test.mjs"
+  },
+  "devDependencies": {
+    "jsdom": "^29.1.1"
   }
 }
