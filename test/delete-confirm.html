@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>PagePatch delete confirmation test</title>
+</head>
+<body data-confirm-calls="0">
+  <main><h1 id="protected-heading">Protected request</h1></main>
+  <script>
+    window.confirm = function () {
+      document.body.dataset.confirmCalls = String(Number(document.body.dataset.confirmCalls) + 1);
+      return false;
+    };
+  </script>
+  <script src="../dist/pagepatch.js"></script>
+</body>
+</html>

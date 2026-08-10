@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="PagePatch turns visual webpage edits into one organized implementation request.">
+    <link rel="icon" type="image/png" href="/pagepatch-icon.png">
+    <link rel="apple-touch-icon" href="/pagepatch-icon.png">
+    <title>PagePatch — Edit the page, export the request</title>
+    <style>
+      * { box-sizing: border-box; }
+      :root { color: #172033; background: #f4f6fb; font: 16px/1.6 Inter, ui-sans-serif, system-ui, sans-serif; }
+      body { min-height: 100vh; margin: 0; }
+      main { width: min(920px, calc(100% - 40px)); margin: 0 auto; padding: 90px 0 110px; }
+      .eyebrow { display: flex; align-items: center; gap: 9px; color: #d9570f; font-size: 13px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+      .eyebrow img { width: 28px; height: 28px; border-radius: 7px; }
+      h1 { max-width: 780px; margin: 12px 0 20px; font-size: clamp(42px, 7vw, 72px); line-height: 1.04; letter-spacing: -.04em; }
+      .lead { max-width: 700px; margin: 0; color: #59657c; font-size: 20px; }
+      .install { margin-top: 54px; padding: 30px; border: 1px solid #dce2ee; border-radius: 22px; background: #fff; box-shadow: 0 24px 70px rgba(30, 45, 78, .12); }
+      .install h2 { margin: 0 0 8px; font-size: 24px; }
+      .install p { margin: 0; color: #637086; }
+      .install-actions { display: flex; flex-wrap: wrap; align-items: stretch; gap: 12px; margin-top: 22px; }
+      .bookmark { display: inline-flex; min-height: 58px; align-items: center; gap: 11px; padding: 7px 20px; border-radius: 12px; background: #f36c21; box-shadow: 0 10px 28px rgba(217, 87, 15, .25); color: #fff; font-weight: 800; text-decoration: none; }
+      .bookmark:hover { background: #d9570f; }
+      .bookmark span { display: grid; text-align: left; }
+      .bookmark small { color: #fff1e8; font-size: 11px; font-weight: 600; }
+      .bookmark small::before { content: "Drag to bookmarks bar"; }
+      html[lang="pt-BR"] .bookmark small::before { content: "Arraste para a barra de favoritos"; }
+      .copy-button { min-height: 58px; padding: 0 18px; border: 1px solid #cfd6e5; border-radius: 12px; background: #f5f7fb; color: #34415b; font-weight: 800; cursor: pointer; }
+      .copy-button:hover { background: #e9edf5; }
+      .hint { margin-top: 14px !important; font-size: 13px; }
+      .importer { margin-top: 24px; padding: 30px; border: 1px solid #dce2ee; border-radius: 22px; background: #fff; }
+      .importer h2 { margin: 0 0 8px; font-size: 24px; }
+      .importer > p { margin: 0; color: #637086; }
+      .drop-zone { display: grid; min-height: 150px; place-items: center; margin-top: 20px; padding: 24px; border: 2px dashed #bdc7db; border-radius: 16px; background: #f7f8fc; color: #536078; text-align: center; cursor: pointer; transition: .16s ease; }
+      .drop-zone:hover, .drop-zone.is-dragging, .drop-zone:focus-visible { border-color: #f36c21; background: #fff7f2; outline: 0; }
+      .drop-zone strong { display: block; color: #26334d; font-size: 18px; }
+      .import-result { margin-top: 18px; padding: 18px; border-radius: 14px; background: #edf8f3; color: #315f50; }
+      .import-result p { margin: 5px 0 0; }
+      .open-import { display: inline-flex; min-height: 44px; align-items: center; margin-top: 14px; padding: 0 16px; border-radius: 10px; background: #16866b; color: #fff; font-weight: 800; text-decoration: none; }
+      .import-error { color: #ad334b; }
+      .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; padding: 0; list-style: none; counter-reset: steps; }
+      .steps li { min-height: 130px; padding: 20px; border: 1px solid #dfe4ed; border-radius: 16px; background: rgba(255,255,255,.72); counter-increment: steps; }
+      .steps li::before { content: counter(steps); display: flex; width: 28px; height: 28px; align-items: center; justify-content: center; margin-bottom: 12px; border-radius: 50%; background: #fff0e6; color: #b9470c; font-size: 13px; font-weight: 800; }
+      .links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+      .links a { padding: 9px 13px; border-radius: 9px; background: #e9edf5; color: #34415b; font-weight: 700; text-decoration: none; }
+      code { padding: 2px 5px; border-radius: 5px; background: #e9edf5; color: #34415b; }
+      footer { margin-top: 50px; color: #7b8599; font-size: 13px; }
+      dialog { width: min(520px, calc(100% - 32px)); padding: 0; border: 1px solid #dce2ee; border-radius: 18px; box-shadow: 0 28px 90px rgba(21, 31, 55, .28); color: #172033; }
+      dialog::backdrop { background: rgba(15, 23, 42, .48); }
+      .dialog-content { padding: 26px; }
+      .dialog-content h3 { margin: 0 0 8px; font-size: 21px; }
+      .dialog-content ol { padding-left: 22px; color: #59657c; }
+      .dialog-content li { margin: 8px 0; }
+      .dialog-actions { display: flex; justify-content: space-between; gap: 12px; margin-top: 22px; }
+      .copy-status { color: #26815f; font-size: 13px; font-weight: 800; }
+      .close-button { min-height: 38px; padding: 0 14px; border: 0; border-radius: 9px; background: #172033; color: #fff; font-weight: 800; cursor: pointer; }
+      @media (max-width: 700px) { main { padding-top: 55px; } .steps { grid-template-columns: 1fr; } .install { padding: 22px; } }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="eyebrow"><img src="/pagepatch-icon.png" alt="">PagePatch</div>
+      <h1>Edit the page. Export one clear request.</h1>
+      <p class="lead">Select text, SEO structure, containers, and computed CSS directly on a webpage. Preview the result and export every requested change together.</p>
+
+      <section class="install">
+        <h2>Add PagePatch to your favorites</h2>
+        <p>The easiest option is to drag the orange button directly into your bookmarks bar.</p>
+        <div class="install-actions">
+          <a class="bookmark" id="bookmarklet" href="javascript:(()=>{if(window.PagePatch){window.PagePatch.start();return}const s=document.createElement('script');s.src='https://pagepatch.evoltex.com.br/pagepatch.js?v='+Date.now();s.onload=()=>window.PagePatch.start();document.head.appendChild(s)})()">✎ <span><strong>PagePatch — Evoltex</strong><small aria-hidden="true"></small></span></a>
+          <button class="copy-button" id="copy-bookmarklet" type="button">Copy bookmark code</button>
+        </div>
+        <p class="hint">If the bookmarks bar is hidden, show it with <code>Ctrl+Shift+B</code>. Browsers do not permit silent one-click bookmark installation.</p>
+      </section>
+
+      <section class="importer">
+        <h2>Open an exported page request</h2>
+        <p>Drop a PagePatch Markdown or JSON export here. You can review its destination before opening the original page.</p>
+        <div class="drop-zone" id="drop-zone" role="button" tabindex="0">
+          <div><strong>Drop the request file here</strong><span>or click to choose a .md or .json file</span></div>
+        </div>
+        <input id="import-file" type="file" accept=".md,.markdown,.json,application/json,text/markdown" hidden>
+        <div class="import-result" id="import-result" hidden>
+          <strong id="import-title"></strong>
+          <p id="import-target"></p>
+          <p id="import-help">Open the page, then click your <strong>Edit this page</strong> favorite to import and preview the requests.</p>
+          <a class="open-import" id="open-import" target="_blank" rel="noopener">Open page and import</a>
+        </div>
+      </section>
+
+      <ol class="steps">
+        <li>Open the webpage you want to review.</li>
+        <li>Click the <strong>Edit this page</strong> bookmark.</li>
+        <li>Make requests, preview them, and export the page.</li>
+      </ol>
+
+      <nav class="links" aria-label="PagePatch resources">
+        <a href="/demo/index.html?edit-mode">Open the demo</a>
+        <a href="/pagepatch.js">View the script</a>
+      </nav>
+
+      <footer>Edits stay in your browser. PagePatch does not modify or send data to the website being reviewed.</footer>
+    </main>
+
+    <dialog id="manual-install">
+      <div class="dialog-content">
+        <h3>Add it manually</h3>
+        <p>The bookmark code is ready to paste.</p>
+        <ol>
+          <li>Show the bookmarks bar with <code>Ctrl+Shift+B</code>.</li>
+          <li>Right-click the bar and choose <strong>Add page</strong>.</li>
+          <li>Name it <strong>✎ PagePatch — Evoltex</strong>.</li>
+          <li>Paste the copied code into the URL field and save.</li>
+        </ol>
+        <div class="dialog-actions">
+          <span class="copy-status" id="copy-status">Bookmark code copied.</span>
+          <button class="close-button" id="close-dialog" type="button">Done</button>
+        </div>
+      </div>
+    </dialog>
+
+    <script>
+      const browserLanguage = (navigator.languages && navigator.languages[0]) || navigator.language || '';
+      const language = /^pt(?:-|$)/i.test(browserLanguage) ? 'pt-BR' : 'en';
+      const isPortuguese = language === 'pt-BR';
+      const text = (english, portuguese) => isPortuguese ? portuguese : english;
+      const translations = {
+        'Edit the page. Export one clear request.': 'Edite a página. Exporte uma solicitação clara.',
+        'Select text, SEO structure, containers, and computed CSS directly on a webpage. Preview the result and export every requested change together.': 'Selecione textos, estrutura de SEO, contêineres e CSS calculado diretamente em uma página. Visualize o resultado e exporte todas as alterações solicitadas juntas.',
+        'Add PagePatch to your favorites': 'Adicione o PagePatch aos favoritos',
+        'The easiest option is to drag the orange button directly into your bookmarks bar.': 'A opção mais fácil é arrastar o botão laranja diretamente para a barra de favoritos.',
+        'Copy bookmark code': 'Copiar código do favorito',
+        'If the bookmarks bar is hidden, show it with': 'Se a barra de favoritos estiver oculta, exiba-a com',
+        'Browsers do not permit silent one-click bookmark installation.': 'Os navegadores não permitem instalar um favorito silenciosamente com um clique.',
+        'Open an exported page request': 'Abrir uma solicitação exportada',
+        'Drop a PagePatch Markdown or JSON export here. You can review its destination before opening the original page.': 'Solte aqui uma exportação Markdown ou JSON do PagePatch. Você poderá conferir o destino antes de abrir a página original.',
+        'Drop the request file here': 'Solte o arquivo da solicitação aqui',
+        'or click to choose a .md or .json file': 'ou clique para escolher um arquivo .md ou .json',
+        'Open the page, then click your': 'Abra a página e clique no favorito',
+        'favorite to import and preview the requests.': 'para importar e visualizar as solicitações.',
+        'Open page and import': 'Abrir página e importar',
+        'Open the webpage you want to review.': 'Abra a página que deseja revisar.',
+        'Click the': 'Clique no favorito',
+        'bookmark.': '.',
+        'Make requests, preview them, and export the page.': 'Crie solicitações, visualize as alterações e exporte a página.',
+        'Open the demo': 'Abrir demonstração',
+        'View the script': 'Ver o script',
+        'Edits stay in your browser. PagePatch does not modify or send data to the website being reviewed.': 'As edições ficam no seu navegador. O PagePatch não modifica nem envia dados ao site que está sendo revisado.',
+        'Add it manually': 'Adicionar manualmente',
+        'The bookmark code is ready to paste.': 'O código do favorito está pronto para ser colado.',
+        'Show the bookmarks bar with': 'Exiba a barra de favoritos com',
+        'Right-click the bar and choose': 'Clique com o botão direito na barra e escolha',
+        'Add page': 'Adicionar página',
+        'Paste into the URL field and name it': 'Cole no campo URL e use o nome',
+        'Bookmark code copied.': 'Código do favorito copiado.',
+        'Done': 'Concluir',
+        'Edit this page': 'Editar esta página'
+      };
+      document.documentElement.lang = language;
+      document.title = text('PagePatch — Edit the page, export the request', 'PagePatch — Edite a página, exporte a solicitação');
+      document.querySelector('meta[name="description"]').content = text('PagePatch turns visual webpage edits into one organized implementation request.', 'O PagePatch transforma edições visuais em uma solicitação de implementação organizada.');
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      let node;
+      while ((node = walker.nextNode())) {
+        if (!isPortuguese || /^(SCRIPT|STYLE|CODE|TEXTAREA)$/.test(node.parentElement && node.parentElement.tagName)) continue;
+        const original = node.nodeValue;
+        const trimmed = original.trim();
+        if (translations[trimmed]) node.nodeValue = original.replace(trimmed, translations[trimmed]);
+      }
+      if (isPortuguese) {
+        document.querySelector('.hint').innerHTML = 'Se a barra de favoritos estiver oculta, exiba-a com <code>Ctrl+Shift+B</code>. Os navegadores não permitem instalar um favorito silenciosamente com um clique.';
+        document.querySelector('#import-help').innerHTML = 'Abra a página e clique no favorito <strong>PagePatch — Evoltex</strong> para importar e visualizar as solicitações.';
+        const steps = document.querySelectorAll('.steps li');
+        steps[0].textContent = 'Abra a página que deseja revisar.';
+        steps[1].innerHTML = 'Clique no favorito <strong>PagePatch — Evoltex</strong>.';
+        steps[2].textContent = 'Crie solicitações, visualize as alterações e exporte a página.';
+        const manualSteps = document.querySelectorAll('#manual-install li');
+        manualSteps[0].innerHTML = 'Exiba a barra de favoritos com <code>Ctrl+Shift+B</code>.';
+        manualSteps[1].innerHTML = 'Clique com o botão direito na barra e escolha <strong>Adicionar página</strong>.';
+        manualSteps[2].innerHTML = 'Use o nome <strong>✎ PagePatch — Evoltex</strong>.';
+        manualSteps[3].textContent = 'Cole o código copiado no campo URL e salve.';
+      }
+
+      const bookmarklet = document.querySelector('#bookmarklet').getAttribute('href');
+      const dialog = document.querySelector('#manual-install');
+      const status = document.querySelector('#copy-status');
+      const dropZone = document.querySelector('#drop-zone');
+      const importFile = document.querySelector('#import-file');
+      const importResult = document.querySelector('#import-result');
+      const importTitle = document.querySelector('#import-title');
+      const importTarget = document.querySelector('#import-target');
+      const importHelp = document.querySelector('#import-help');
+      const openImport = document.querySelector('#open-import');
+
+      async function copyBookmarklet() {
+        try {
+          await navigator.clipboard.writeText(bookmarklet);
+          status.textContent = text('Bookmark code copied.', 'Código do favorito copiado.');
+        } catch (error) {
+          const textarea = document.createElement('textarea');
+          textarea.value = bookmarklet;
+          textarea.style.position = 'fixed';
+          textarea.style.left = '-9999px';
+          document.body.appendChild(textarea);
+          textarea.select();
+          const copied = document.execCommand('copy');
+          textarea.remove();
+          status.textContent = copied ? text('Bookmark code copied.', 'Código do favorito copiado.') : text('Copy was blocked. Use the drag option instead.', 'A cópia foi bloqueada. Use a opção de arrastar.');
+        }
+        dialog.showModal();
+      }
+
+      document.querySelector('#copy-bookmarklet').addEventListener('click', copyBookmarklet);
+      document.querySelector('#close-dialog').addEventListener('click', () => dialog.close());
+
+      function parseRequestFile(text) {
+        try {
+          const direct = JSON.parse(text);
+          if (direct && Array.isArray(direct.changes)) return direct;
+        } catch (_) {}
+        const blocks = Array.from(text.matchAll(/```json\s*([\s\S]*?)```/gi));
+        for (const block of blocks) {
+          try {
+            const parsed = JSON.parse(block[1]);
+            if (parsed && Array.isArray(parsed.changes)) return parsed;
+          } catch (_) {}
+        }
+        throw new Error(text('No PagePatch import data was found in this file.', 'Nenhum dado de importação do PagePatch foi encontrado neste arquivo.'));
+      }
+
+      function encodePayload(payload) {
+        const bytes = new TextEncoder().encode(JSON.stringify(payload));
+        let binary = '';
+        for (let index = 0; index < bytes.length; index += 0x8000) binary += String.fromCharCode(...bytes.subarray(index, index + 0x8000));
+        return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
+      }
+
+      async function prepareImport(file) {
+        importResult.hidden = false;
+        importResult.classList.remove('import-error');
+        try {
+          const payload = parseRequestFile(await file.text());
+          const activeChanges = payload.changes.filter(change => change && change.enabled !== false);
+          if (!activeChanges.length) throw new Error(text('This file has no active requests to import.', 'Este arquivo não possui solicitações ativas para importar.'));
+          const target = new URL(payload.url);
+          target.searchParams.delete('edit-mode');
+          target.hash = 'pagepatch-import=' + encodePayload({ ...payload, url: target.href, changes: activeChanges });
+          if (target.href.length > 100000) throw new Error(text('This request is too large for a browser import link.', 'Esta solicitação é grande demais para um link de importação do navegador.'));
+          importTitle.textContent = isPortuguese
+            ? `${activeChanges.length} solicitaç${activeChanges.length === 1 ? 'ão pronta' : 'ões prontas'} em ${file.name}`
+            : `${activeChanges.length} request${activeChanges.length === 1 ? '' : 's'} ready from ${file.name}`;
+          importTarget.textContent = target.origin + target.pathname + target.search;
+          importHelp.hidden = false;
+          openImport.hidden = false;
+          openImport.href = target.href;
+        } catch (error) {
+          importResult.classList.add('import-error');
+          importTitle.textContent = error.message || text('This request file could not be read.', 'Não foi possível ler este arquivo de solicitação.');
+          importTarget.textContent = '';
+          importHelp.hidden = true;
+          openImport.hidden = true;
+          openImport.removeAttribute('href');
+        }
+      }
+
+      dropZone.addEventListener('click', () => importFile.click());
+      dropZone.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); importFile.click(); }
+      });
+      importFile.addEventListener('change', () => { if (importFile.files[0]) prepareImport(importFile.files[0]); });
+      ['dragenter', 'dragover'].forEach(type => dropZone.addEventListener(type, event => { event.preventDefault(); dropZone.classList.add('is-dragging'); }));
+      ['dragleave', 'drop'].forEach(type => dropZone.addEventListener(type, event => { event.preventDefault(); dropZone.classList.remove('is-dragging'); }));
+      dropZone.addEventListener('drop', event => { if (event.dataTransfer.files[0]) prepareImport(event.dataTransfer.files[0]); });
+    </script>
+  </body>
+</html>
