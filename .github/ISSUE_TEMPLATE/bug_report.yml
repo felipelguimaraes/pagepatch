@@ -1,0 +1,43 @@
+name: Bug report
+description: Report behavior that is broken or unexpected.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Do not include private page content, credentials, or customer data.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Explain what you expected and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open...
+        2. Choose...
+        3. Click...
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and version
+      placeholder: Chrome 130
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: PagePatch version
+      placeholder: 0.5.0
+  - type: textarea
+    id: context
+    attributes:
+      label: Extra context
+      description: Add a sanitized screenshot or console error if it helps.
+

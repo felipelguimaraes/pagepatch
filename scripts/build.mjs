@@ -13,7 +13,7 @@ const iconSmallPath = resolve(projectRoot, "assets/pagepatch-icon-64.png");
 const deployIconPath = resolve(projectRoot, "deploy/pagepatch-icon.png");
 const source = await readFile(sourcePath, "utf8");
 const iconData = await readFile(iconSmallPath);
-const banner = `/* PagePatch v0.5.0 | Standalone visual change-request editor | ${new Date().toISOString()} */\n`;
+const banner = "/* PagePatch v0.5.0 | Standalone visual change-request editor */\n";
 const builtScript = banner + source.replace("__PAGEPATCH_ICON_DATA__", `data:image/png;base64,${iconData.toString("base64")}`);
 const demoSource = await readFile(demoSourcePath, "utf8");
 

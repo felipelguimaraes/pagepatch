@@ -1,58 +1,93 @@
 # PagePatch
 
-PagePatch is a dependency-free visual editor that converts proposed changes on a live webpage into one route-wide Markdown request.
+Point at a webpage, say what should change, and export one clear request.
 
-The complete product intent is documented in [PRODUCT-BRIEF.md](./PRODUCT-BRIEF.md).
+[Try PagePatch](https://pagepatch.evoltex.com.br/) · [Open the demo](https://pagepatch.evoltex.com.br/demo/index.html?edit-mode)
 
-## Build
+![PagePatch SEO workspace](docs/images/pagepatch-seo-workspace.png)
 
-```powershell
-npm run build
-```
+PagePatch is a visual change-request editor that runs on top of an existing webpage. A teammate can edit copy, review SEO, propose CSS, attach notes, and preview everything in place. PagePatch saves the requests in the browser and exports one Markdown file for the person implementing the work.
 
-The distributable file is `dist/pagepatch.js`. It contains the interface, styles, persistence, preview logic, and exporter; it has no runtime dependencies.
+It ships as one JavaScript file and has no runtime dependencies, account system, or backend.
 
-The same build prepares `deploy/` for Cloudflare Pages. It contains the installation page, hosted demo, and `/pagepatch.js` distribution URL.
+## Start in two minutes
 
-## Import
+1. Open the [PagePatch installer](https://pagepatch.evoltex.com.br/).
+2. Drag **PagePatch by Evoltex** to your bookmarks bar.
+3. Open the webpage you want to review and click the bookmark.
+4. Choose a mode, click an element, and write the request.
+5. Check the preview and export the page.
+
+The installer also lets you copy the bookmark code when dragging is inconvenient.
+
+## What it handles
+
+- Text edits with the original and requested copy.
+- Semantic changes between `H1` through `H6`, `P`, and `SPAN`.
+- Page title, description, canonical URL, robots, and referrer settings.
+- Heading hierarchy, links, lists, social cards, images, and JSON-LD.
+- Computed CSS inspection with selected overrides.
+- Notes for layout, behavior, assets, or work that cannot be previewed directly.
+- One route-wide export with readable instructions and lossless JSON import data.
+- Local preview persistence across reloads and React-style DOM rerenders.
+
+Every visible item in the SEO workspace and request list can locate and flash its element on the page.
+
+## Other ways to load it
+
+Add the hosted script to a page you control:
 
 ```html
 <script src="https://pagepatch.evoltex.com.br/pagepatch.js"></script>
 ```
 
-The coworker-friendly installer and bookmarklet are available at `https://pagepatch.evoltex.com.br/`.
-
-The script stays dormant on ordinary URLs. Add the `edit-mode` query parameter to activate it:
+The script stays dormant until the URL contains `edit-mode`:
 
 ```text
-https://mercos.com/example?edit-mode
+https://example.com/pricing?edit-mode
 ```
 
-Manual activation is also available:
+You can also start it yourself:
 
 ```js
 window.PagePatch.start()
 ```
 
-## Local persistence
+## Importing a request
 
-Requests are stored in `localStorage` under `pagepatch:v1`. Storage is specific to the current browser and origin. The `edit-mode` parameter is removed when calculating the route key, so `/example` and `/example?edit-mode` share the same page request.
+Drop an exported `.md` or `.json` file on the [PagePatch homepage](https://pagepatch.evoltex.com.br/). It shows the target page and active request count before opening an import link. Click the bookmark on that page to load and preview the requests.
 
-## Important behavior
+## Privacy and limitations
 
-- Nothing is sent to a server.
-- Preview changes affect only the current browser DOM.
-- Enabled requests automatically reapply after reloads and client-framework DOM rerenders.
-- Text and alt-text edits preview live while typing; closing the editor restores an unsaved draft.
-- Turning preview off restores the page without deleting requests.
-- SEO mode includes technical metadata, heading hierarchy, anchor/link auditing, list structure, social-card previews, image auditing, and JSON-LD editing.
-- Link requests can change both the visible anchor text and its destination URL.
-- Exported technical details include a complete `body > ... > element` DOM path plus the shorter stable selector when available.
-- Clicking a request card scrolls to and flashes its visible page target.
-- Export includes active requests only and produces a human-readable Markdown handoff with page-area context, current/requested values, and secondary technical details.
-- The structured JSON is kept as PagePatch import data rather than presented as an implementation prompt.
-- Drop an exported Markdown or JSON file at `https://pagepatch.evoltex.com.br/` to reopen its target page, then click the bookmarklet to import and preview it.
-- The floating launcher can be collapsed while leaving previews active.
+- PagePatch stores requests in `localStorage` for the current browser and website origin.
+- It does not send requests to PagePatch, Evoltex, or the website being reviewed.
+- Preview changes affect only the current browser DOM. They do not change the real website or its source code.
+- Content Security Policy rules can prevent bookmarklets or externally hosted scripts on some websites.
+- Clearing browser storage removes requests that have not been exported.
+
+Only load the script from a host you trust. Like any browser inspector, PagePatch can read the DOM of the page where it runs.
+
+## Development
+
+PagePatch requires Node.js 20 or newer for its development tools.
+
+```bash
+npm ci
+npm test
+npm run check
+npm run build
+```
+
+The build writes the standalone script to `dist/pagepatch.js` and prepares the Cloudflare Pages files in `deploy/`.
+
+```text
+src/pagepatch.js          Source
+dist/pagepatch.js         Standalone distribution
+demo/                     Local demo page
+deploy/                   Hosted installer, demo, and script
+test/                     Node and browser-DOM regression tests
+PRODUCT-BRIEF.md          Product intent and boundaries
+```
 
 ## Public API
 
@@ -63,3 +98,11 @@ window.PagePatch.getChanges()
 window.PagePatch.exportPage()
 window.PagePatch.clearPage()
 ```
+
+## Contributing
+
+Bug reports and focused pull requests are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) before making a change.
+
+## License
+
+[MIT](LICENSE) © Felipe Guimarães

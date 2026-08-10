@@ -29,7 +29,7 @@ It should be possible to include it on a site with a normal script tag:
 Importing the script must not automatically expose editing controls to normal visitors. The editor activates when the page URL contains the `edit-mode` query parameter:
 
 ```text
-https://mercos.com/example?edit-mode
+https://example.com/pricing?edit-mode
 ```
 
 The script may also expose a small JavaScript API for manually starting or stopping the tool when needed.
@@ -111,10 +111,12 @@ Text semantics can be changed in either direction among `H1` through `H6`, `P`, 
 
 The page-level SEO information should also be visible in a compact summary.
 
-SEO mode also includes a dedicated workspace with five views:
+SEO mode also includes a dedicated workspace with seven views:
 
 - Overview for title, meta description, canonical URL, robots indexing/following directives, referrer policy, and quick audit signals.
 - Headings for the complete H1–H6 hierarchy, structural warnings, and direct editing or semantic-level changes.
+- Links for visible labels, destinations, missing href values, and new-tab safety checks.
+- Lists for ordered and unordered list structure, item counts, and semantic list-type changes.
 - Social for Open Graph and X/Twitter metadata with live Facebook/LinkedIn and X card previews.
 - Images for thumbnails, dimensions, alt-text status, and direct alt-text editing.
 - Schema for viewing, validating, editing, and adding JSON-LD blocks.
@@ -190,7 +192,6 @@ The export should include:
 - Original value.
 - Proposed value.
 - Optional reason or note.
-- Whether the request is currently enabled.
 - Structured JSON data so the request can also be consumed by tooling.
 
 Only enabled requests are exported. Disabled requests are omitted entirely, and the human-readable document does not show redundant enabled/status fields.

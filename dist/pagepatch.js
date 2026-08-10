@@ -1,4 +1,4 @@
-/* PagePatch v0.5.0 | Standalone visual change-request editor | 2026-08-10T19:01:56.815Z */
+/* PagePatch v0.5.0 | Standalone visual change-request editor */
 (function () {
   "use strict";
 

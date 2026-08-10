@@ -3,6 +3,19 @@
   "version": "0.5.0",
   "private": true,
   "description": "A dependency-free visual webpage change-request editor.",
+  "license": "MIT",
+  "author": "Felipe Guimarães",
+  "homepage": "https://pagepatch.evoltex.com.br/",
+  "keywords": [
+    "bookmarklet",
+    "change-request",
+    "seo",
+    "visual-editor",
+    "web-development"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "build": "node scripts/build.mjs",
     "check": "node --check src/pagepatch.js && node --check dist/pagepatch.js",
