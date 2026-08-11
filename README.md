@@ -4,6 +4,8 @@ Point at a webpage, say what should change, and export one clear request.
 
 [Try PagePatch](https://pagepatch.evoltex.com.br/) · [Open the demo](https://pagepatch.evoltex.com.br/demo/index.html?edit-mode)
 
+[![Support PagePatch on Ko-fi](https://storage.ko-fi.com/cdn/kofi3.png?v=3)](https://ko-fi.com/felipelg)
+
 ![PagePatch SEO workspace](docs/images/pagepatch-seo-workspace.png)
 
 PagePatch is a visual change-request editor that runs on top of an existing webpage. A teammate can edit copy, review SEO, propose CSS, attach notes, and preview everything in place. PagePatch saves the requests in the browser and exports one Markdown file for the person implementing the work.
