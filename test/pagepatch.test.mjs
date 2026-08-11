@@ -133,9 +133,9 @@ afterEach(() => {
 });
 
 describe("homepage copy", () => {
-  function openHomepage(language) {
+  function openHomepage(language, search = "") {
     return new JSDOM(homepage, {
-      url: "https://pagepatch.evoltex.com.br/",
+      url: `https://pagepatch.evoltex.com.br/${search}`,
       runScripts: "dangerously",
       beforeParse(window) {
         Object.defineProperty(window.navigator, "language", { configurable: true, value: language });
@@ -148,10 +148,12 @@ describe("homepage copy", () => {
     const dom = openHomepage("en-US");
     const { document } = dom.window;
     assert.equal(document.documentElement.lang, "en");
-    assert.equal(document.querySelector("h1").textContent, "Point at the page. Say what should change.");
-    assert.match(document.querySelector(".lead").textContent, /write the request right there/i);
+    assert.equal(document.querySelector("h1").textContent, "Select what needs changing, write the request, and export it");
+    assert.match(document.querySelector(".lead").textContent, /write the request beside the element/i);
     assert.equal(document.querySelector("#bookmarklet strong").textContent, "PagePatch by Evoltex");
-    assert.match(document.querySelector("footer").textContent, /does not change the real site/i);
+    assert.match(document.querySelector("footer").textContent, /does not change the live site/i);
+    assert.equal(document.querySelector('[data-language="en"]').getAttribute("aria-current"), "true");
+    assert.equal(document.querySelector('[data-language="pt-BR"]').getAttribute("aria-current"), "false");
     assert.equal(document.querySelector(".github-link").href, "https://github.com/felipelguimaraes/pagepatch");
     assert.equal(document.querySelector(".kofi-link").href, "https://ko-fi.com/felipelg");
     assert.match(document.querySelector(".kofi-link img").src, /^https:\/\/storage\.ko-fi\.com\/cdn\/kofi3\.png/);
@@ -163,13 +165,24 @@ describe("homepage copy", () => {
     const dom = openHomepage("pt-BR");
     const { document } = dom.window;
     assert.equal(document.documentElement.lang, "pt-BR");
-    assert.equal(document.querySelector("h1").textContent, "Aponte na página. Diga o que precisa mudar.");
-    assert.match(document.querySelector(".lead").textContent, /escreva o pedido ali mesmo/i);
+    assert.equal(document.querySelector("h1").textContent, "Selecione o que precisa mudar, escreva o pedido e exporte tudo");
+    assert.match(document.querySelector(".lead").textContent, /escreva o pedido ao lado do elemento/i);
     assert.equal(document.querySelector("#bookmarklet strong").textContent, "PagePatch by Evoltex");
-    assert.match(document.querySelector("footer").textContent, /não altera o site de verdade/i);
+    assert.match(document.querySelector("footer").textContent, /não altera o site publicado/i);
     assert.equal(document.querySelector(".github-link").textContent, "Repositório no GitHub");
+    assert.equal(document.querySelector('[data-language="pt-BR"]').getAttribute("aria-current"), "true");
+    assert.equal(document.querySelector('[data-language="en"]').getAttribute("aria-current"), "false");
     assert.equal(document.querySelector(".kofi-link").href, "https://ko-fi.com/felipelg");
     assert.equal(document.title, "PagePatch: marque alterações em qualquer página");
+    dom.window.close();
+  });
+
+  test("manual language selection overrides the browser language", () => {
+    const dom = openHomepage("en-US", "?lang=pt-BR");
+    const { document } = dom.window;
+    assert.equal(document.documentElement.lang, "pt-BR");
+    assert.equal(document.querySelector("h1").textContent, "Selecione o que precisa mudar, escreva o pedido e exporte tudo");
+    assert.equal(document.querySelector('[data-language="pt-BR"]').getAttribute("aria-current"), "true");
     dom.window.close();
   });
 });
