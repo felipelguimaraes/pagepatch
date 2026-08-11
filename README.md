@@ -4,7 +4,7 @@ Point at a webpage, say what should change, and export one clear request.
 
 [Try PagePatch](https://pagepatch.evoltex.com.br/) · [Open the demo](https://pagepatch.evoltex.com.br/demo/index.html?edit-mode)
 
-[![Support PagePatch on Ko-fi](https://storage.ko-fi.com/cdn/kofi3.png?v=3)](https://ko-fi.com/felipelg)
+<a href="https://ko-fi.com/felipelg"><img src="https://storage.ko-fi.com/cdn/kofi3.png?v=3" alt="Support PagePatch on Ko-fi" width="143" height="36"></a>
 
 ![PagePatch SEO workspace](docs/images/pagepatch-seo-workspace.png)
 
