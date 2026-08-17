@@ -57,7 +57,7 @@ window.PagePatch.start()
 
 ## Importing a request
 
-Drop an exported `.md` or `.json` file on the [PagePatch homepage](https://pagepatch.evoltex.com.br/). It shows the target page and active request count before opening an import link. Click the bookmark on that page to load and preview the requests.
+Open the page the export belongs to, click the PagePatch bookmark, then click **Import** on the bar and choose the Markdown or JSON file.
 
 ## Privacy and limitations
 
@@ -98,6 +98,7 @@ window.PagePatch.start()
 window.PagePatch.stop()
 window.PagePatch.getChanges()
 window.PagePatch.exportPage()
+window.PagePatch.importPage(text)
 window.PagePatch.clearPage()
 ```
 

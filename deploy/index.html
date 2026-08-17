@@ -37,7 +37,7 @@
         background-size: 26px 26px;
       }
       ::selection { background: var(--accent); color: #fff; }
-      a:focus-visible, button:focus-visible, .drop-zone:focus-visible, .bookmark:focus-visible {
+      a:focus-visible, button:focus-visible, .bookmark:focus-visible {
         outline: 3px solid rgba(243, 108, 33, .55);
         outline-offset: 3px;
       }
@@ -118,14 +118,11 @@
       code { padding: 2px 6px; border: 1px solid var(--line); border-radius: 5px; background: #f2ecdd; color: var(--ink); font-family: inherit; font-size: .84em; }
 
       .importer { margin-top: 26px; }
-      .drop-zone { display: grid; min-height: 150px; place-items: center; margin-top: 22px; padding: 24px; border: 2px dashed #cfc4a9; border-radius: 14px; background: #f8f3e7; color: var(--ink-soft); cursor: pointer; text-align: center; transition: border-color .16s ease, background .16s ease; }
-      .drop-zone:hover, .drop-zone.is-dragging, .drop-zone:focus-visible { border-color: var(--accent); background: var(--accent-soft); }
-      .drop-zone strong { display: block; color: var(--ink); font-size: 18px; }
-      .import-result { margin-top: 18px; padding: 18px; border: 1px solid #bcdccc; border-radius: 14px; background: #ecf6ef; color: #2c5a49; }
-      .import-result p { margin: 5px 0 0; }
-      .open-import { display: inline-flex; min-height: 46px; align-items: center; margin-top: 14px; padding: 0 18px; border: 1.5px solid #0f6b54; border-radius: 11px; background: #16866b; color: #fff; font-weight: 700; text-decoration: none; }
-      .open-import:hover { background: #0f6b54; }
-      .import-error { border-color: #e3b7c0; background: #faeff1; color: #8e2f45; }
+      .import-steps { margin: 18px 0 0; padding: 0; list-style: none; counter-reset: import-steps; }
+      .import-steps li { position: relative; padding: 12px 0 12px 42px; border-top: 1px solid var(--line); color: var(--ink-soft); counter-increment: import-steps; }
+      .import-steps li:first-child { border-top: 0; padding-top: 4px; }
+      .import-steps li::before { content: "0" counter(import-steps); position: absolute; left: 0; color: var(--accent-deep); font-size: 13px; font-weight: 600; }
+      .import-steps li strong { color: var(--ink); }
 
       .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 48px 0 0; padding: 0; counter-reset: steps; list-style: none; }
       .steps li { min-height: 134px; padding: 22px; border: 1px solid var(--line); border-radius: 14px; background: var(--card); color: var(--ink-soft); counter-increment: steps; transition: border-color .15s ease; }
@@ -207,18 +204,13 @@
       </section>
 
       <section class="importer">
-        <h2>Open an exported request</h2>
-        <p>Drop a PagePatch Markdown or JSON file here to see which page it belongs to before opening it</p>
-        <div class="drop-zone" id="drop-zone" role="button" tabindex="0">
-          <div><strong>Drop the file here</strong><span>or click to choose a Markdown or JSON file</span></div>
-        </div>
-        <input id="import-file" type="file" accept=".md,.markdown,.json,application/json,text/markdown" hidden>
-        <div class="import-result" id="import-result" hidden>
-          <strong id="import-title"></strong>
-          <p id="import-target"></p>
-          <p id="import-help">Open the page, then click your <strong>PagePatch by Evoltex</strong> bookmark to load and preview the requests</p>
-          <a class="open-import" id="open-import" target="_blank" rel="noopener">Open the page and load requests</a>
-        </div>
+        <h2>Load an exported request</h2>
+        <p>Import the file on the live page, from the PagePatch bar</p>
+        <ol class="import-steps">
+          <li>Open the page the file belongs to</li>
+          <li>Click your PagePatch bookmark</li>
+          <li>Click Import and choose the Markdown or JSON file</li>
+        </ol>
       </section>
 
       <ol class="steps">
@@ -288,11 +280,11 @@
         'Add PagePatch to your bookmarks': 'Adicione o PagePatch aos seus favoritos',
         'Drag this button to your bookmarks bar, then click it to open PagePatch on any site': 'Arraste este botão para a barra de favoritos e clique nele para abrir o PagePatch em qualquer site',
         'Copy bookmark code': 'Copiar o código do favorito',
-        'Open an exported request': 'Abra uma solicitação exportada',
-        'Drop a PagePatch Markdown or JSON file here to see which page it belongs to before opening it': 'Solte aqui um arquivo Markdown ou JSON do PagePatch para ver a qual página ele pertence antes de abri-lo',
-        'Drop the file here': 'Solte o arquivo aqui',
-        'or click to choose a Markdown or JSON file': 'ou clique para escolher um arquivo Markdown ou JSON',
-        'Open the page and load requests': 'Abrir a página e carregar solicitações',
+        'Load an exported request': 'Carregue uma solicitação exportada',
+        'Import the file on the live page, from the PagePatch bar': 'Importe o arquivo na página original, pela barra do PagePatch',
+        'Open the page the file belongs to': 'Abra a página a que o arquivo pertence',
+        'Click your PagePatch bookmark': 'Clique no favorito do PagePatch',
+        'Click Import and choose the Markdown or JSON file': 'Clique em Importar e escolha o arquivo Markdown ou JSON',
         'Open the page you want to change': 'Abra a página que quer mudar',
         'Select what needs changing, check the preview, and export one request': 'Selecione o que precisa mudar, confira a prévia e exporte uma solicitação',
         'Try the demo': 'Testar a demonstração',
@@ -330,7 +322,6 @@
       }
       if (isPortuguese) {
         document.querySelector('.hint').innerHTML = 'Não está vendo a barra de favoritos? Pressione <code>Ctrl+Shift+B</code> e crie o favorito, porque o navegador não deixa um site fazer isso por você';
-        document.querySelector('#import-help').innerHTML = 'Abra a página e clique no favorito <strong>PagePatch by Evoltex</strong> para carregar e visualizar as solicitações';
         const steps = document.querySelectorAll('.steps li');
         steps[1].innerHTML = 'Clique em <strong>PagePatch by Evoltex</strong> nos seus favoritos';
         const manualSteps = document.querySelectorAll('#manual-install li');
@@ -343,13 +334,6 @@
       const bookmarklet = document.querySelector('#bookmarklet').getAttribute('href');
       const dialog = document.querySelector('#manual-install');
       const status = document.querySelector('#copy-status');
-      const dropZone = document.querySelector('#drop-zone');
-      const importFile = document.querySelector('#import-file');
-      const importResult = document.querySelector('#import-result');
-      const importTitle = document.querySelector('#import-title');
-      const importTarget = document.querySelector('#import-target');
-      const importHelp = document.querySelector('#import-help');
-      const openImport = document.querySelector('#open-import');
 
       async function copyBookmarklet() {
         try {
@@ -371,65 +355,6 @@
 
       document.querySelector('#copy-bookmarklet').addEventListener('click', copyBookmarklet);
       document.querySelector('#close-dialog').addEventListener('click', () => dialog.close());
-
-      function parseRequestFile(text) {
-        try {
-          const direct = JSON.parse(text);
-          if (direct && Array.isArray(direct.changes)) return direct;
-        } catch (_) {}
-        const blocks = Array.from(text.matchAll(/```json\s*([\s\S]*?)```/gi));
-        for (const block of blocks) {
-          try {
-            const parsed = JSON.parse(block[1]);
-            if (parsed && Array.isArray(parsed.changes)) return parsed;
-          } catch (_) {}
-        }
-        throw new Error(text('No PagePatch import data was found in this file.', 'Nenhum dado de importação do PagePatch foi encontrado neste arquivo.'));
-      }
-
-      function encodePayload(payload) {
-        const bytes = new TextEncoder().encode(JSON.stringify(payload));
-        let binary = '';
-        for (let index = 0; index < bytes.length; index += 0x8000) binary += String.fromCharCode(...bytes.subarray(index, index + 0x8000));
-        return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
-      }
-
-      async function prepareImport(file) {
-        importResult.hidden = false;
-        importResult.classList.remove('import-error');
-        try {
-          const payload = parseRequestFile(await file.text());
-          const activeChanges = payload.changes.filter(change => change && change.enabled !== false);
-          if (!activeChanges.length) throw new Error(text('This file has no active requests to import.', 'Este arquivo não possui solicitações ativas para importar.'));
-          const target = new URL(payload.url);
-          target.searchParams.delete('edit-mode');
-          target.hash = 'pagepatch-import=' + encodePayload({ ...payload, url: target.href, changes: activeChanges });
-          if (target.href.length > 100000) throw new Error(text('This request is too large for a browser import link.', 'Esta solicitação é grande demais para um link de importação do navegador.'));
-          importTitle.textContent = isPortuguese
-            ? `${activeChanges.length} solicitaç${activeChanges.length === 1 ? 'ão pronta' : 'ões prontas'} em ${file.name}`
-            : `${activeChanges.length} request${activeChanges.length === 1 ? '' : 's'} ready from ${file.name}`;
-          importTarget.textContent = target.origin + target.pathname + target.search;
-          importHelp.hidden = false;
-          openImport.hidden = false;
-          openImport.href = target.href;
-        } catch (error) {
-          importResult.classList.add('import-error');
-          importTitle.textContent = error.message || text('This request file could not be read.', 'Não foi possível ler este arquivo de solicitação.');
-          importTarget.textContent = '';
-          importHelp.hidden = true;
-          openImport.hidden = true;
-          openImport.removeAttribute('href');
-        }
-      }
-
-      dropZone.addEventListener('click', () => importFile.click());
-      dropZone.addEventListener('keydown', event => {
-        if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); importFile.click(); }
-      });
-      importFile.addEventListener('change', () => { if (importFile.files[0]) prepareImport(importFile.files[0]); });
-      ['dragenter', 'dragover'].forEach(type => dropZone.addEventListener(type, event => { event.preventDefault(); dropZone.classList.add('is-dragging'); }));
-      ['dragleave', 'drop'].forEach(type => dropZone.addEventListener(type, event => { event.preventDefault(); dropZone.classList.remove('is-dragging'); }));
-      dropZone.addEventListener('drop', event => { if (event.dataTransfer.files[0]) prepareImport(event.dataTransfer.files[0]); });
     </script>
   </body>
 </html>

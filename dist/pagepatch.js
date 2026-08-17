@@ -13,7 +13,7 @@
   var IS_PT = LANGUAGE === "pt-BR";
   var UI_PT = {
     "Close": "Fechar", "Preview": "Prévia", "Requests": "Solicitações", "Page": "Página", "Delete": "Excluir", "Enable request": "Ativar solicitação",
-    "Export active requests": "Exportar solicitações ativas", "Edit page SEO": "Editar SEO da página", "Clear page": "Limpar página",
+    "Export active requests": "Exportar solicitações ativas", "Edit page SEO": "Editar SEO da página", "Clear page": "Limpar página", "Import": "Importar",
     "No requests yet. Choose a mode and select something on the page.": "Nenhuma solicitação ainda. Escolha um modo e selecione algo na página.",
     "Overview": "Visão geral", "Headings": "Cabeçalhos", "Links": "Links", "Lists": "Listas", "Social": "Social", "Images": "Imagens", "Schema": "Schema", "SEO workspace": "Área de trabalho de SEO",
     "Title": "Título", "Description": "Descrição", "Missing": "Ausente", "H1 headings": "Cabeçalhos H1", "Missing alt text": "Texto alternativo ausente", "Canonical": "Canônica", "JSON-LD blocks": "Blocos JSON-LD",
@@ -30,6 +30,7 @@
     "This request changes page metadata and has no visible target.": "Esta solicitação altera metadados da página e não possui um alvo visível.", "Add at least one valid CSS declaration.": "Adicione pelo menos uma declaração CSS válida.",
     "Write the request before saving.": "Escreva a solicitação antes de salvar.", "Describe the requested container or layout change.": "Descreva a alteração solicitada no contêiner ou layout.", "Change something or write a note before saving.": "Altere algo ou escreva uma observação antes de salvar.",
     "Local storage is unavailable. Export before leaving this page.": "O armazenamento local não está disponível. Exporte antes de sair desta página.", "This PagePatch import link is invalid or damaged.": "Este link de importação do PagePatch é inválido ou está corrompido.",
+    "No PagePatch import data was found in this file.": "Nenhum dado de importação do PagePatch foi encontrado neste arquivo.", "This file has no active requests to import.": "Este arquivo não possui solicitações ativas para importar.", "This request file could not be read.": "Não foi possível ler este arquivo de solicitação.",
     "Toggle PagePatch": "Abrir ou fechar PagePatch"
   };
 
@@ -429,6 +430,7 @@
     controls.innerHTML = '<button class="pp-launch" type="button" data-action="expand" aria-label="Toggle PagePatch"><img src="' + ICON_DATA + '" alt=""></button>' +
       modeButtons + (state.expanded ? '<span class="pp-divider"></span>' +
       '<label class="pp-preview"><input type="checkbox" data-action="preview" ' + (state.preview ? "checked" : "") + '> Preview</label>' +
+      '<button type="button" data-action="import">Import</button>' +
       '<button type="button" data-action="requests">Requests <span class="pp-count">' + pageChanges().length + "</span></button>" : "");
   }
 
@@ -818,6 +820,7 @@
     if (action === "toggle-change") toggleChange(target.dataset.id, target.checked);
     if (action === "delete-change") deleteChange(target.dataset.id);
     if (action === "locate-change") { locateChange(target.dataset.id); return; }
+    if (action === "import") { chooseImportFile(); return; }
     if (action === "export") exportPage();
     if (action === "clear") clearPage();
     if (action === "page-seo") { renderPageSeoEditor(); return; }
@@ -1422,35 +1425,103 @@
     return JSON.parse(new TextDecoder().decode(bytes));
   }
 
+  function parseRequestText(text) {
+    var source = String(text || "");
+    try {
+      var direct = JSON.parse(source);
+      if (direct && Array.isArray(direct.changes)) return direct;
+    } catch (_) {}
+    var fence = /```json\s*([\s\S]*?)```/gi;
+    var block;
+    while ((block = fence.exec(source))) {
+      try {
+        var parsed = JSON.parse(block[1]);
+        if (parsed && Array.isArray(parsed.changes)) return parsed;
+      } catch (_) {}
+    }
+    throw new Error("No PagePatch import data was found in this file.");
+  }
+
+  function applyImportedPayload(payload) {
+    var result = { count: 0, error: "" };
+    if (!payload || !Array.isArray(payload.changes)) {
+      result.error = "This PagePatch import link is invalid or damaged.";
+      return result;
+    }
+    var cleanUrl = location.origin + location.pathname + location.search;
+    payload.changes.filter(function (change) { return change && change.enabled !== false; }).forEach(function (change) {
+      var imported = JSON.parse(JSON.stringify(change));
+      if (!imported.property && (imported.kind === "div" || imported.kind === "note")) imported.property = "note";
+      if (imported.property === "note" && !imported.after) imported.after = imported.note || "";
+      if (!imported.selector || !imported.kind || !imported.property) return;
+      imported.route = state.route; imported.url = cleanUrl; imported.enabled = true;
+      imported.importedAt = new Date().toISOString();
+      var existing = state.allChanges.find(function (item) {
+        var legacyDivNote = imported.kind === "div" && imported.property === "note" && item.kind === "div" && !item.property;
+        return item.route === state.route && item.selector === imported.selector && (item.property === imported.property || legacyDivNote);
+      });
+      if (existing) {
+        var existingId = existing.id; var existingCreatedAt = existing.createdAt;
+        Object.assign(existing, imported, { id: existingId, createdAt: existingCreatedAt || imported.createdAt || new Date().toISOString() });
+      } else {
+        imported.id = uid(); imported.createdAt = imported.createdAt || new Date().toISOString();
+        state.allChanges.push(imported);
+      }
+      result.count += 1;
+    });
+    if (result.count) saveChanges();
+    return result;
+  }
+
+  function importFromText(text) {
+    var result = { count: 0, error: "" };
+    try {
+      result = applyImportedPayload(parseRequestText(text));
+    } catch (_) {
+      result.error = "No PagePatch import data was found in this file.";
+    }
+    if (!result.error && !result.count) result.error = "This file has no active requests to import.";
+    if (result.error) {
+      announce(result.error, true);
+      return result;
+    }
+    applyAll();
+    state.panel = "requests";
+    renderUi();
+    announce(result.count + " request" + (result.count === 1 ? "" : "s") + " imported");
+    return result;
+  }
+
+  function chooseImportFile() {
+    var input = document.createElement("input");
+    input.type = "file";
+    input.accept = ".md,.markdown,.json,application/json,text/markdown";
+    input.addEventListener("change", function () {
+      var file = input.files && input.files[0];
+      if (input.parentNode) input.parentNode.removeChild(input);
+      if (!file) return;
+      if (file.text) {
+        file.text().then(importFromText).catch(function () {
+          announce("This request file could not be read.", true);
+        });
+        return;
+      }
+      var reader = new FileReader();
+      reader.onload = function () { importFromText(String(reader.result || "")); };
+      reader.onerror = function () { announce("This request file could not be read.", true); };
+      reader.readAsText(file);
+    });
+    document.documentElement.appendChild(input);
+    input.click();
+  }
+
   function consumeImportFromUrl() {
     var marker = "#pagepatch-import=";
     if (location.hash.indexOf(marker) !== 0) return { count: 0, error: "" };
     var result = { count: 0, error: "" };
     try {
-      var payload = decodeImportPayload(location.hash.slice(marker.length));
-      if (!payload || !Array.isArray(payload.changes)) throw new Error("Missing changes array");
-      var cleanUrl = location.origin + location.pathname + location.search;
-      payload.changes.filter(function (change) { return change && change.enabled !== false; }).forEach(function (change) {
-        var imported = JSON.parse(JSON.stringify(change));
-        if (!imported.property && (imported.kind === "div" || imported.kind === "note")) imported.property = "note";
-        if (imported.property === "note" && !imported.after) imported.after = imported.note || "";
-        if (!imported.selector || !imported.kind || !imported.property) return;
-        imported.route = state.route; imported.url = cleanUrl; imported.enabled = true;
-        imported.importedAt = new Date().toISOString();
-        var existing = state.allChanges.find(function (item) {
-          var legacyDivNote = imported.kind === "div" && imported.property === "note" && item.kind === "div" && !item.property;
-          return item.route === state.route && item.selector === imported.selector && (item.property === imported.property || legacyDivNote);
-        });
-        if (existing) {
-          var existingId = existing.id; var existingCreatedAt = existing.createdAt;
-          Object.assign(existing, imported, { id: existingId, createdAt: existingCreatedAt || imported.createdAt || new Date().toISOString() });
-        } else {
-          imported.id = uid(); imported.createdAt = imported.createdAt || new Date().toISOString();
-          state.allChanges.push(imported);
-        }
-        result.count += 1;
-      });
-      saveChanges();
+      result = applyImportedPayload(decodeImportPayload(location.hash.slice(marker.length)));
+      if (result.error) throw new Error(result.error);
     } catch (_) {
       result.error = "This PagePatch import link is invalid or damaged.";
     }
@@ -1635,6 +1706,7 @@
     stop: stop,
     getChanges: function () { return JSON.parse(JSON.stringify(pageChanges())); },
     exportPage: exportPage,
+    importPage: importFromText,
     clearPage: clearPage
   };
 

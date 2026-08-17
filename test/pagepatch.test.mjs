@@ -158,6 +158,9 @@ describe("homepage copy", () => {
     assert.equal(document.querySelector(".kofi-link").href, "https://ko-fi.com/felipelg");
     assert.match(document.querySelector(".kofi-link img").src, /^https:\/\/storage\.ko-fi\.com\/cdn\/kofi3\.png/);
     assert.equal(document.title, "PagePatch: mark changes on any webpage");
+    assert.equal(document.querySelector(".importer h2").textContent, "Load an exported request");
+    assert.equal(document.querySelector("#drop-zone"), null);
+    assert.match(document.querySelector(".import-steps").textContent, /Click Import and choose the Markdown or JSON file/);
     dom.window.close();
   });
 
@@ -174,6 +177,8 @@ describe("homepage copy", () => {
     assert.equal(document.querySelector('[data-language="en"]').getAttribute("aria-current"), "false");
     assert.equal(document.querySelector(".kofi-link").href, "https://ko-fi.com/felipelg");
     assert.equal(document.title, "PagePatch: marque alterações em qualquer página");
+    assert.equal(document.querySelector(".importer h2").textContent, "Carregue uma solicitação exportada");
+    assert.match(document.querySelector(".import-steps").textContent, /Clique em Importar e escolha o arquivo Markdown ou JSON/);
     dom.window.close();
   });
 
@@ -232,6 +237,28 @@ describe("complete change-request export matrix", () => {
       assert.equal(actual.enabled, true);
     }
     assert.equal(imported.window.location.hash, "");
+  });
+
+  test("Import on the bar restores an exported markdown file", () => {
+    const source = createPage({ changes: matrix });
+    source.window.PagePatch.exportPage();
+    const markdown = source.exported;
+    closePage(source);
+    const page = createPage();
+    const ui = shadow(page);
+    assert.ok(ui.querySelector('[data-action="import"]'), "import control is on the bar");
+    const result = page.window.PagePatch.importPage(markdown);
+    assert.equal(result.count, matrix.length);
+    assert.equal(page.window.PagePatch.getChanges().length, matrix.length);
+    assert.equal(page.window.document.querySelector("#text").textContent, "New paragraph");
+  });
+
+  test("Import rejects a file without PagePatch data", () => {
+    const page = createPage();
+    const result = page.window.PagePatch.importPage("# notes\n\nnot a pagepatch export");
+    assert.equal(result.count, 0);
+    assert.match(result.error, /No PagePatch import data/);
+    assert.equal(page.window.PagePatch.getChanges().length, 0);
   });
 });
 

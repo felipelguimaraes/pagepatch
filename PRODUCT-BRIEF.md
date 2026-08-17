@@ -198,7 +198,7 @@ Only enabled requests are exported. Disabled requests are omitted entirely, and 
 
 Markdown is the preferred human-readable format. Each request leads with a plain-language action such as “Change selected text,” identifies the selected element, and adds nearby section or heading context. Selectors and DOM properties remain available under secondary technical details instead of dominating the handoff. The JSON representation is included as PagePatch import data, not as an AI or implementation prompt.
 
-The public PagePatch page accepts an exported Markdown or JSON file by click or drag-and-drop. It shows the detected target and active request count, then opens an import link for the original page. Clicking the PagePatch bookmark on that target page consumes the import, stores the requests locally for that origin, removes the temporary import payload from the URL, and previews the active changes.
+The editor imports an exported Markdown or JSON file from the PagePatch bar on the original page. Import stores the requests locally for that origin and previews the active changes.
 
 ## Element identification
 
